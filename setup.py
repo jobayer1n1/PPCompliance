@@ -30,6 +30,7 @@ PYTHON_PACKAGES = [
     "transformers",
     "beautifulsoup4",
     "tqdm",
+    "xlwt",
 ]
 
 OPTIONAL_PYTHON_PACKAGES = [
