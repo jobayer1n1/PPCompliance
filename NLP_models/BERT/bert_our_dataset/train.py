@@ -36,7 +36,7 @@ class CFG:
     embed_dim = 768
     hidden_dim = 768 * 2
     hidden_dim2 = 768 * 3
-    drop_rate = 0.1  # <-- Added drop_rate here
+    drop_rate = 0.1 
     DEBUG = False
 
 if pl is not None:
