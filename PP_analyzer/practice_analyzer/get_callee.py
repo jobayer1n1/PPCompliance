@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+from pathlib import Path
 
 privacy_chrome_api_1layer = ["accessibilityFeatures", "browsingData", "commands",
                              "contentSettings", "cookies", "declarativeNetRequest",
@@ -146,9 +147,9 @@ def traverseAllDOMTreeFile(dir_path):
 
 
 def handle_all_callee():
-    global all_chrome_api
-    callee_path = '../raw_data/process'
-    # traverseAllCalleeFile(callee_path)
+    script_dir = Path(__file__).resolve().parent
+    callee_path = str(script_dir.parent / 'raw_data' / 'process')
+    traverseAllCalleeFile(callee_path)
     traverseAllDOMTreeFile(callee_path)
 
 

@@ -1,25 +1,46 @@
-from train import CustomEffNet,LitSorghum
 from transformers import BertTokenizer, BertModel,BertConfig
 import torch
 import os
+import sys
+from pathlib import Path
 from bs4 import BeautifulSoup
 import csv
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+TRAIN_DIR = SCRIPT_DIR.parent.parent / "NLP_models" / "BERT" / "bert_our_dataset"
+sys.path.insert(0, str(TRAIN_DIR))
+from train import CustomEffNet
+
+
+def load_customeffnet_state(model, checkpoint_path, device):
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    state_dict = checkpoint.get('state_dict', checkpoint)
+
+    # Lightning saves LitPrivacy.model(CustomEffNet.model(...)) as
+    # model.model.*, while plain CustomEffNet expects model.*.
+    if state_dict and all(key.startswith('model.model.') for key in state_dict):
+        state_dict = {
+            key.replace('model.model.', 'model.', 1): value
+            for key, value in state_dict.items()
+        }
+
+    model.load_state_dict(state_dict)
 
 #split article into sentences
 import re
 alphabets= "([A-Za-z])"
 prefixes = "(Mr|St|Mrs|Ms|Dr)[.]"
 suffixes = "(Inc|Ltd|Jr|Sr|Co)"
-starters = "(Mr|Mrs|Ms|Dr|He\s|She\s|It\s|They\s|Their\s|Our\s|We\s|But\s|However\s|That\s|This\s|Wherever)"
+starters = r"(Mr|Mrs|Ms|Dr|He\s|She\s|It\s|They\s|Their\s|Our\s|We\s|But\s|However\s|That\s|This\s|Wherever)"
 acronyms = "([A-Z][.][A-Z][.](?:[A-Z][.])?)"
-websites = "[.](com|net|org|io|gov)"
+websites = "[.](jiwejfowejfojfojo|net|org|io|gov)"
 def split_into_sentences(text):
     text = " " + text + "  "
     text = text.replace("\n"," ")
     text = re.sub(prefixes,"\\1<prd>",text)
     text = re.sub(websites,"<prd>\\1",text)
     if "Ph.D" in text: text = text.replace("Ph.D.","Ph<prd>D<prd>")
-    text = re.sub("\s" + alphabets + "[.] "," \\1<prd> ",text)
+    text = re.sub(r"\s" + alphabets + r"[.] "," \\1<prd> ",text)
     text = re.sub(acronyms+" "+starters,"\\1<stop> \\2",text)
     text = re.sub(alphabets + "[.]" + alphabets + "[.]" + alphabets + "[.]","\\1<prd>\\2<prd>\\3<prd>",text)
     text = re.sub(alphabets + "[.]" + alphabets + "[.]","\\1<prd>\\2<prd>",text)
@@ -52,16 +73,17 @@ def split_into_sentences(text):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = CustomEffNet()
-model.load_state_dict(torch.load('./models/last.ckpt')['state_dict'])
+model_path = SCRIPT_DIR / 'models' / 'epoch=41-valid_loss=1.0552-valid_acc=0.7201.ckpt'
+load_customeffnet_state(model, model_path, device)
 model.to(device)
 model.eval()
 embeddingmodel = BertModel.from_pretrained("bert-base-uncased")
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
-sm = torch.nn.Softmax()
+sm = torch.nn.Softmax(dim=-1)
 
 # load sentences
-policy_folder='../raw_data/privacy_data'
+policy_folder = str(SCRIPT_DIR.parent / 'raw_data' / 'privacy_data')
 
 policy_conclude_predict=[]
 policy_raw_result=[]
@@ -77,7 +99,7 @@ for root, dirs, files in os.walk(policy_folder):
         ext_result=[0]*21
         ext_result_top2=[0]*21
         # print(ext_result)
-        with open(os.path.join(root, file), 'r') as f:
+        with open(os.path.join(root, file), 'r', encoding='utf-8', errors='ignore') as f:
             try:
                 tmp = f.read()
             except:
@@ -88,16 +110,16 @@ for root, dirs, files in os.walk(policy_folder):
             text=text.replace('\\n', '')
             text=text.replace('\\t', '')
             text=text.replace('\\', '')
-            text=text.replace('xe2x80x9c', '')
-            text=text.replace('xe2x80x9d', '')
-            text=text.replace('xe2x80x99', '')
-            text=text.replace('xe2x8098', '')
-            text=text.replace('xe2x86x92', '')
-            text=text.replace('b\'', '')
-            text=text.replace('xe2x80x8b', '')
-            text=text.replace('xc2xa0', '')
-            text=text.replace('xc2xb7', '')
-            text=text.replace('rr', '')
+            text=text.replace('xe2x80x9c', '') # “
+            text=text.replace('xe2x80x9d', '') # ”
+            text=text.replace('xe2x80x99', '') # ’
+            text=text.replace('xe2x8098', '')  # ‘
+            text=text.replace('xe2x86x92', '') # →
+            text=text.replace('b\'', '')       # The leading b' that appears when converting a Python bytes object to a string via str(b_data)
+            text=text.replace('xe2x80x8b', '') # Zero-width space
+            text=text.replace('xc2xa0', '')    # Non-breaking space
+            text=text.replace('xc2xb7', '')    # Middle dot / Bullet · 
+            text=text.replace('rr', '')        
             sentences=split_into_sentences(text)
             for sentence in sentences:
                 if len(sentence)>20:
@@ -115,20 +137,20 @@ for root, dirs, files in os.walk(policy_folder):
                     ext_result[pred_res1]+=1
                     ext_result_top2[pred_res1]+=1
                     ext_result_top2[pred_res2]+=1
-                    with open('./privacy_conclude_raw.csv','a') as f:
+                    with open(SCRIPT_DIR / 'privacy_conclude_raw.csv','a') as f:
                         csvf=csv.writer(f)
                         res=[ext_id,sentence]+[str(i) for i in pred]
                         csvf.writerow(res)
                 # print(ext_id,pred_res)
-        with open('./privacy_conclude_result_top1.csv','a') as f:
+        with open(SCRIPT_DIR / 'privacy_conclude_result_top1.csv','a') as f:
             csvf=csv.writer(f)
             csvf.writerow([ext_id]+[str(i) for i in ext_result])
-        with open('./privacy_conclude_result_top2.csv','a') as f:
+        with open(SCRIPT_DIR / 'privacy_conclude_result_top2.csv','a') as f:
             csvf=csv.writer(f)
             csvf.writerow([ext_id]+[str(i) for i in ext_result_top2])
         policy_conclude_predict.append([ext_id]+ext_result)
 
-with open('./privacy_conclude_result_last.csv','w') as f:
+with open(SCRIPT_DIR / 'privacy_conclude_result_last.csv','w') as f:
     csvf=csv.writer(f)
     csvf.writerows(policy_conclude_predict)
 '''        

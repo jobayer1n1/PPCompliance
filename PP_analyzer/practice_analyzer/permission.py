@@ -26,7 +26,7 @@ if __name__ == "__main__":
     permission_file_csv='./all_permission.csv'
 
     permission_items=[]
-    permission_list=['permission','cookies','webRequest','<all_urls>','file://*','tabs','http://*/*','https://*/*','storage','webnavigation','webRequestblocking','activeTab']
+    permission_list=['permission','cookies','webRequest','<all_urls>','file://*','tabs','http://*/*','https://*/*','storage','webNavigation','webRequestblocking','activeTab']
 
     # all extensions have been unzipped into AllUnzip folder
     # get and analyze the manifest.json file of each extension
@@ -35,13 +35,14 @@ if __name__ == "__main__":
             if 'manifest.json' in file:
                 # analyze the manifest file
                 file_path=os.path.join(root,file)
-                with open(file_path,'rb') as f:
+                with open(file_path, 'r', encoding='utf-8-sig') as f:
                     try:
-                        tmp=f.read().decode('ascii')
+                        # tmp=f.read().decode('ascii')
                             
-                        meta_data=json.loads(tmp)
+                        # meta_data=json.loads(tmp)
+                        meta_data = json.load(f)
                     except:
-                        # print(file_path)
+                        print(file_path)
                         break
                 id=root.split('/')[-1]
                 try:

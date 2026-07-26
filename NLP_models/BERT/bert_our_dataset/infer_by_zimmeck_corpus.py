@@ -6,6 +6,25 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 import csv
 import pandas as pd
+from pathlib import Path
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+
+
+def load_customeffnet_state(model, checkpoint_path, device):
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    state_dict = checkpoint.get('state_dict', checkpoint)
+
+    # Lightning saves LitPrivacy.model(CustomEffNet.model(...)) as
+    # model.model.*, while plain CustomEffNet expects model.*.
+    if state_dict and all(key.startswith('model.model.') for key in state_dict):
+        state_dict = {
+            key.replace('model.model.', 'model.', 1): value
+            for key, value in state_dict.items()
+        }
+
+    model.load_state_dict(state_dict)
 
 def match_after_label_mapping(pred,target):
     # uncommen if test is other set
@@ -41,16 +60,17 @@ def match_after_label_mapping(pred,target):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = CustomEffNet()
-model.load_state_dict(torch.load('./logs/bert-base-uncased/version_1/checkpoints/last.ckpt')['state_dict'])
+model_path = SCRIPT_DIR / 'logs' / 'epoch=41-valid_loss=1.0552-valid_acc=0.7201.ckpt'
+load_customeffnet_state(model, model_path, device)
 model.to(device)
 model.eval()
 embeddingmodel = BertModel.from_pretrained("bert-base-uncased")
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
-sm = torch.nn.Softmax()
+sm = torch.nn.Softmax(dim=-1)
 
 # load sentences
-policy_file='./zimmeck_dataset_filtered.csv'
+policy_file=SCRIPT_DIR / 'zimmeck_dataset_filtered.csv'
 col_list=['label','review','filename']
 df=pd.read_csv(policy_file, usecols=col_list)
 

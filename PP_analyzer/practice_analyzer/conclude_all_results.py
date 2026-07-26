@@ -2,6 +2,7 @@ from operator import imod
 import os
 import json
 import csv
+from pathlib import Path
 
 chrome_api=["accessibilityFeatures", "browsingData", "commands",
             "contentSettings", "cookies", "declarativeNetRequest",
@@ -12,7 +13,7 @@ chrome_api=["accessibilityFeatures", "browsingData", "commands",
 
 tag_csv_header=['html_file','tag','id','class','text','placeholder','raw_html']
 
-input_dom=[]
+input_dom = ["get_element_operation_times", "create_element_operation_times", "other_operation_times"]
 
 def save_json(path, data):
     with open(path, 'w') as f:
@@ -27,16 +28,29 @@ def save_csv(path,data,csv_header):
         writer.writerows(data)
 
 def traverDOM(dir_path):
-    res_list=[]
+    res_list = []
+    # Tell the CSV builder what our table columns will be
+    global input_dom
+    
     for item in os.listdir(dir_path):
         if os.path.isfile(os.path.join(dir_path, item)):
             if item[-19:] == '_dom_operation.json':
-                ext_id=item[:-19]
-
-                with open(os.path.join(dir_path, item),'r') as f:
-                    file_data=json.load(f)
-
-                print('find the file',ext_id)
+                ext_id = item[:-19]
+                
+                with open(os.path.join(dir_path, item), 'r') as f:
+                    file_data = json.load(f)
+                
+                # Extract just the top-level count totals, defaulting to 0 if missing
+                tmp = [
+                    ext_id,
+                    file_data.get("get_element_operation_times", 0),
+                    file_data.get("create_element_operation_times", 0),
+                    file_data.get("other_operation_times", 0)
+                ]
+                res_list.append(tmp)
+                print('Analyzed DOM for extension:', ext_id)
+                
+    return res_list
 
 
 def traverAPI(dir_path):
@@ -83,14 +97,16 @@ def traverTags(dir_path):
     return res_list
 
 if __name__ == "__main__":
-    dir_path='../raw_data/dynamic_pages'
-    api_csv_path='./chrome_api_conclude.csv'
-    tag_csv_path='./dynamic_input_tag_conclude.csv'
-    
-    # res_list=traverDOM(dir_path)
+    script_dir = Path(__file__).resolve().parent
+    dir_path = str(script_dir.parent / 'raw_data' / 'process')
+    api_csv_path = str(script_dir / 'chrome_api_conclude.csv')
+    tag_csv_path = str(script_dir / 'dynamic_input_tag_conclude.csv')
+    dom_ = str(script_dir / 'dom_conclude.csv')
+    res_list=traverDOM(dir_path)
+    save_csv(dom_,res_list,input_dom)
 
-    # res_list=traverAPI(dir_path)
-    # save_csv(api_csv_path,res_list,chrome_api)
+    res_list=traverAPI(dir_path)
+    save_csv(api_csv_path,res_list,chrome_api)
 
-    res_list=traverTags(dir_path)
-    save_csv(tag_csv_path,res_list,tag_csv_header)
+    # res_list=traverTags(dir_path)
+    # save_csv(tag_csv_path,res_list,tag_csv_header)
