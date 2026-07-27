@@ -87,24 +87,42 @@ class PrivacyDataset(Dataset):
 
 
 # Classifier Model
+# class CustomEffNet(nn.Module):
+#     def __init__(self):
+#         super().__init__()
+#         self.model = nn.Sequential(
+#             nn.Linear(CFG.embed_dim, CFG.hidden_dim),
+#             nn.ReLU(),
+#             nn.Dropout(CFG.drop_rate), # <-- Added Dropout
+#             nn.Linear(CFG.hidden_dim, CFG.hidden_dim2),
+#             nn.ReLU(),
+#             nn.Dropout(CFG.drop_rate), # <-- Added Dropout
+#             nn.Linear(CFG.hidden_dim2, CFG.hidden_dim),
+#             nn.ReLU(),
+#             nn.Dropout(CFG.drop_rate), # <-- Added Dropout
+#             nn.Linear(CFG.hidden_dim, CFG.num_classes)
+#         )
+
+#     def forward(self, x):
+#         return self.model(x)
+
 class CustomEffNet(nn.Module):
     def __init__(self):
         super().__init__()
+
         self.model = nn.Sequential(
             nn.Linear(CFG.embed_dim, CFG.hidden_dim),
             nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
             nn.Linear(CFG.hidden_dim, CFG.hidden_dim2),
             nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
-            nn.Linear(CFG.hidden_dim2, CFG.hidden_dim),
+            nn.Linear(CFG.hidden_dim2,CFG.hidden_dim),
             nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
-            nn.Linear(CFG.hidden_dim, CFG.num_classes)
+            nn.Linear(CFG.hidden_dim,CFG.num_classes)
         )
-
     def forward(self, x):
-        return self.model(x)
+        x = self.model(x)
+        return x
+
 
 
 if pl is not None:
