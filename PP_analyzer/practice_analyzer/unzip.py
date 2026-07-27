@@ -6,54 +6,59 @@ import sys
 import zipfile
 from pathlib import Path
 
+ARCHIVE_EXTENSIONS = ('.crx', '.zip', '.xpi')
+
+
+def resolve_path(base_dir: Path, path_arg: str) -> Path:
+    path = Path(path_arg)
+    if path.is_absolute():
+        return path
+    return base_dir / path
+
+
 def main() -> int:
     script_dir = Path(__file__).resolve().parent
-    
-    # Default values: resolve "../raw_data" relative to the script's directory
-    root = str(script_dir.parent / "raw_data")
-    folder = "current"
+    base_dir = script_dir.parent
 
-    # Use command line arguments if specified
-    if len(sys.argv) >= 3:
-        root = sys.argv[1]
-        folder = sys.argv[2]
-    elif len(sys.argv) == 2:
-        # If only one argument is provided, treat it as the subfolder
-        folder = sys.argv[1]
+    if len(sys.argv) > 3:
+        print("Usage: python unzip.py [from] [to]")
+        return 1
 
-    newpath = os.path.join(root, "unzip", folder)
-    os.makedirs(newpath, exist_ok=True)
+    from_arg = sys.argv[1] if len(sys.argv) >= 2 else os.path.join("raw_data", "zip", "current")
+    to_arg = sys.argv[2] if len(sys.argv) >= 3 else os.path.join("raw_data", "unzip", "current")
 
-    path = os.path.join(root, "zip", folder)
-    if not os.path.exists(path):
-        print(f"Error: Source directory {path} does not exist.")
+    source_dir = resolve_path(base_dir, from_arg)
+    output_root = resolve_path(base_dir, to_arg)
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    if not source_dir.exists():
+        print(f"Error: Source directory {source_dir} does not exist.")
         return 1
         
-    files = sorted(os.listdir(path))
-    print(f"start to unzip folder {path}")
+    files = sorted(source_dir.iterdir())
+    print(f"start to unzip folder {source_dir}")
 
-    for filename in files:
-        if not filename.endswith(('.crx', '.zip', '.xpi')):
+    for archive_path in files:
+        if not archive_path.is_file() or archive_path.suffix.lower() not in ARCHIVE_EXTENSIONS:
             continue
-        archive_path = os.path.join(path, filename)
-        output_dir = os.path.join(newpath, os.path.splitext(filename)[0])
-        print(f"Extracting {filename} to {output_dir}...")
+        output_dir = output_root / archive_path.stem
+        print(f"Extracting {archive_path.name} to {output_dir}...")
         try:
             import stat
             with zipfile.ZipFile(archive_path, 'r') as zip_ref:
                 for member in zip_ref.infolist():
                     # Resolve destination path for the member
-                    target_path = os.path.join(output_dir, member.filename)
-                    if os.path.exists(target_path):
+                    target_path = output_dir / member.filename
+                    if target_path.exists():
                         # If a read-only file exists, make it writeable
-                        if os.path.isfile(target_path):
-                            mode = os.stat(target_path).st_mode
+                        if target_path.is_file():
+                            mode = target_path.stat().st_mode
                             if not (mode & stat.S_IWRITE):
-                                os.chmod(target_path, stat.S_IWRITE)
+                                target_path.chmod(stat.S_IWRITE)
                     
                     zip_ref.extract(member, output_dir)
         except Exception as e:
-            print(f"Error extracting {filename}: {e}")
+            print(f"Error extracting {archive_path.name}: {e}")
 
     return 0
 

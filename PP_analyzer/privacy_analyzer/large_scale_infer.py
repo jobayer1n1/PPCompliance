@@ -73,7 +73,7 @@ def split_into_sentences(text):
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = CustomEffNet()
-model_path = SCRIPT_DIR / 'models' / 'epoch=41-valid_loss=1.0552-valid_acc=0.7201.ckpt'
+model_path = SCRIPT_DIR / 'models' / 'epoch=34-valid_loss=1.1593-valid_acc=0.6981.ckpt'
 load_customeffnet_state(model, model_path, device)
 model.to(device)
 model.eval()
