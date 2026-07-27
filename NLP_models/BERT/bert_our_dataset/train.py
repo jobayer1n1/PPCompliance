@@ -12,7 +12,7 @@ try:
     import torchmetrics
     from pytorch_lightning import Trainer, seed_everything
     from pytorch_lightning.loggers import CSVLogger
-    from pytorch_lightning.callbacks import ModelCheckpoint
+    from pytorch_lightning.callbacks import ModelCheckpoint,EarlyStopping
     from sklearn.model_selection import StratifiedKFold
 except ModuleNotFoundError:
     pl = None
@@ -23,120 +23,102 @@ class CFG:
     seed = 42
     model_name = 'bert-base-uncased'
     num_classes = 21
-    max_lr = 1e-3
-    pct_start = 0.2
-    div_factor = 1.0e+3
-    final_div_factor = 1.0e+3
-    num_epochs = 80
+
+    # Fixed: 5e-3 was ~100-500x too high for fine-tuning BERT and was
+    # blowing up the pretrained weights, causing the model to collapse
+    # to predicting the majority class. 2e-5 is a standard BERT fine-tuning LR.
+    max_lr = 2e-5
+    num_epochs = 40
     batch_size = 8
+    drop_rate = 0.1
+    embed_dim = 768
+    n_fold = 10
+
+    # Training configuration
+    optimizer = 'Adam'
+    pct_start = 0.1          # shorter warmup now that peak LR is reasonable
+    div_factor = 10.0        # start closer to max_lr instead of 1000x below it
+    final_div_factor = 100.0 # don't decay all the way to near-zero
     accum = 1
-    n_fold = 4
     base_dir = ""
     filename = 'policy_all_in_one_filter_purged.csv'
-    embed_dim = 768
-    hidden_dim = 768 * 2
-    hidden_dim2 = 768 * 3
-    drop_rate = 0.1 
     DEBUG = False
+    max_length = 512
+
 
 if pl is not None:
     seed_everything(CFG.seed)
 
 
-# 1. Pre-extract embeddings function (Run once on GPU/CPU)
-def extract_bert_embeddings(df, text_col='review', batch_size=32):
-    """Pre-extracts [CLS] or pooled embeddings for the entire dataframe."""
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    tokenizer = BertTokenizer.from_pretrained(CFG.model_name)
-    bert_model = BertModel.from_pretrained(CFG.model_name).to(device)
-    bert_model.eval()
-
-    embeddings = []
-    texts = df[text_col].tolist()
-
-    with torch.no_grad():
-        for i in range(0, len(texts), batch_size):
-            batch_texts = texts[i : i + batch_size]
-            encoded = tokenizer(
-                batch_texts,
-                padding=True,
-                truncation=True,
-                max_length=512,
-                return_tensors='pt'
-            ).to(device)
-
-            # Using pooler_output ([CLS] vector passed through a dense layer)
-            outputs = bert_model(**encoded)
-            pooled_output = outputs.pooler_output.cpu().numpy()
-            embeddings.append(pooled_output)
-
-    return np.vstack(embeddings)
+def get_next_run_dir(base_dir='trainingLogs'):
+    os.makedirs(base_dir, exist_ok=True)
+    existing_versions = [
+        int(entry[len('version'):]) 
+        for entry in os.listdir(base_dir) 
+        if entry.startswith('version') and entry[len('version'):].isdigit()
+    ]
+    next_version = max(existing_versions, default=-1) + 1
+    run_dir = os.path.join(base_dir, f'version{next_version}')
+    os.makedirs(run_dir, exist_ok=False)
+    return run_dir
 
 
-# 2. Picklable Dataset using static Tensors
 class PrivacyDataset(Dataset):
-    def __init__(self, embeddings, labels):
-        self.embeddings = torch.tensor(embeddings, dtype=torch.float32)
-        self.labels = torch.tensor(labels, dtype=torch.long)
+    def __init__(self, texts, labels, tokenizer, max_length):
+        self.texts = texts
+        self.labels = labels
+        self.tokenizer = tokenizer
+        self.max_length = max_length
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.texts)
 
     def __getitem__(self, idx):
-        return self.embeddings[idx], self.labels[idx]
-
-
-# Classifier Model
-class CustomEffNet(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.model = nn.Sequential(
-            nn.Linear(CFG.embed_dim, CFG.hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
-            nn.Linear(CFG.hidden_dim, CFG.hidden_dim2),
-            nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
-            nn.Linear(CFG.hidden_dim2, CFG.hidden_dim),
-            nn.ReLU(),
-            nn.Dropout(CFG.drop_rate), # <-- Added Dropout
-            nn.Linear(CFG.hidden_dim, CFG.num_classes)
+        text = str(self.texts[idx])
+        label = self.labels[idx]
+        
+        # Call tokenizer object directly (replaces deprecated encode_plus)
+        encoding = self.tokenizer(
+            text,
+            add_special_tokens=True,
+            max_length=self.max_length,
+            return_token_type_ids=False,
+            padding='max_length',
+            truncation=True,
+            return_attention_mask=True,
+            return_tensors='pt',
         )
-
-    def forward(self, x):
-        return self.model(x)
+        
+        return {
+            'input_ids': encoding['input_ids'].flatten(),
+            'attention_mask': encoding['attention_mask'].flatten(),
+            'label': torch.tensor(label, dtype=torch.long)
+        }
 
 
 if pl is not None:
     class LitPrivacy(pl.LightningModule):
-        def __init__(self, model):
+        def __init__(self):
             super().__init__()
-            self.model = model
-            # Separate metric instances for train/valid: sharing one
-            # torchmetrics.Accuracy across both phases (including the
-            # pre-training sanity-check validation pass) can cause
-            # incorrect accumulated state between phases.
+            self.bert = BertModel.from_pretrained(CFG.model_name)
+            self.dropout = nn.Dropout(CFG.drop_rate)
+            self.classifier = nn.Linear(CFG.embed_dim, CFG.num_classes)
+            
             self.train_metric = torchmetrics.Accuracy(task="multiclass", num_classes=CFG.num_classes)
             self.valid_metric = torchmetrics.Accuracy(task="multiclass", num_classes=CFG.num_classes)
+            self.test_metric = torchmetrics.Accuracy(task="multiclass", num_classes=CFG.num_classes)
             self.criterion = nn.CrossEntropyLoss()
-            self.save_hyperparameters(ignore=['model'])
+            self.save_hyperparameters()
 
-        def forward(self, x, *args, **kwargs):
-            return self.model(x)
+        def forward(self, input_ids, attention_mask):
+            outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+            pooled_output = outputs.pooler_output 
+            output = self.dropout(pooled_output)
+            return self.classifier(output)
 
         def configure_optimizers(self):
-            # Initial LR is set to match what OneCycleLR will compute on its
-            # first step (max_lr / div_factor) instead of an unrelated value
-            # that would just get silently overridden.
             initial_lr = CFG.max_lr / CFG.div_factor
-            optimizer = torch.optim.Adam(self.model.parameters(), lr=initial_lr)
-
-            # OneCycleLR is stepped once per *optimizer* step. Under gradient
-            # accumulation, optimizer steps happen once every `accum` batches,
-            # so steps_per_epoch must reflect that -- not the raw number of
-            # batches in the loader -- or the schedule will run out early /
-            # raise a "Tried to step X times, but the total number of steps
-            # is Y" error once accum > 1.
+            optimizer = torch.optim.Adam(self.parameters(), lr=initial_lr) 
             steps_per_epoch = math.ceil(CFG.steps_per_epoch / CFG.accum)
 
             scheduler = torch.optim.lr_scheduler.OneCycleLR(
@@ -151,19 +133,39 @@ if pl is not None:
             return [optimizer], [{'scheduler': scheduler, 'interval': 'step'}]
 
         def training_step(self, batch, batch_idx):
-            embedding_res, label = batch
-            output = self.model(embedding_res)
+            input_ids = batch['input_ids']
+            attention_mask = batch['attention_mask']
+            label = batch['label']
+            
+            output = self(input_ids, attention_mask)
             loss = self.criterion(output, label)
             score = self.train_metric(output.argmax(dim=1), label)
+            
             self.log_dict({'train_loss': loss, 'train_acc': score}, on_step=False, on_epoch=True, prog_bar=True)
             return loss
 
         def validation_step(self, batch, batch_idx):
-            embedding_res, label = batch
-            output = self.model(embedding_res)
+            input_ids = batch['input_ids']
+            attention_mask = batch['attention_mask']
+            label = batch['label']
+            
+            output = self(input_ids, attention_mask)
             loss = self.criterion(output, label)
             score = self.valid_metric(output.argmax(dim=1), label)
+            
             self.log_dict({'valid_loss': loss, 'valid_acc': score}, on_step=False, on_epoch=True, prog_bar=True)
+            return loss
+
+        def test_step(self, batch, batch_idx):
+            input_ids = batch['input_ids']
+            attention_mask = batch['attention_mask']
+            label = batch['label']
+            
+            output = self(input_ids, attention_mask)
+            loss = self.criterion(output, label)
+            score = self.test_metric(output.argmax(dim=1), label)
+            
+            self.log_dict({'test_loss': loss, 'test_acc': score}, on_step=False, on_epoch=True, prog_bar=True)
             return loss
 
 
@@ -179,39 +181,43 @@ if __name__ == "__main__":
         df_all = df_all[:200]
         CFG.num_epochs = 10
 
-    # Extract BERT features before running the training loop
-    print("Extracting BERT embeddings...")
-    embeddings_all = extract_bert_embeddings(df_all)
+    texts_all = df_all["review"].values
     labels_all = df_all["label"].values
+    
+    tokenizer = BertTokenizer.from_pretrained(CFG.model_name)
 
-    # K-Fold Cross Validation
     skf = StratifiedKFold(n_splits=CFG.n_fold, shuffle=True, random_state=CFG.seed)
+    fold_indices = [valid_idx for _, valid_idx in skf.split(texts_all, labels_all)]
+    run_dir = get_next_run_dir()
 
-    for fold, (train_idx, valid_idx) in enumerate(skf.split(embeddings_all, labels_all)):
-        print(f"\n--- Running Fold {fold + 1}/{CFG.n_fold} ---")
+    # Optimal worker setting to prevent DataLoader warnings/freezing
+    num_workers = min(2, os.cpu_count() or 1)
 
-        train_dataset = PrivacyDataset(embeddings_all[train_idx], labels_all[train_idx])
-        valid_dataset = PrivacyDataset(embeddings_all[valid_idx], labels_all[valid_idx])
+    for test_fold in range(CFG.n_fold):
+        valid_fold = (test_fold + 1) % CFG.n_fold
+        train_folds = [i for i in range(CFG.n_fold) if i not in (test_fold, valid_fold)]
 
-        train_loader = DataLoader(train_dataset, batch_size=CFG.batch_size, shuffle=True, pin_memory=True, num_workers=4)
-        valid_loader = DataLoader(valid_dataset, batch_size=CFG.batch_size, shuffle=False, pin_memory=True, num_workers=4)
+        train_idx = np.concatenate([fold_indices[i] for i in train_folds])
+        valid_idx = fold_indices[valid_fold]
+        test_idx = fold_indices[test_fold]
+
+        print(f"\n--- Running Fold {test_fold + 1}/{CFG.n_fold} (train=8, tune={valid_fold + 1}, test={test_fold + 1}) ---")
+
+        train_dataset = PrivacyDataset(texts_all[train_idx], labels_all[train_idx], tokenizer, CFG.max_length)
+        valid_dataset = PrivacyDataset(texts_all[valid_idx], labels_all[valid_idx], tokenizer, CFG.max_length)
+        test_dataset = PrivacyDataset(texts_all[test_idx], labels_all[test_idx], tokenizer, CFG.max_length)
+
+        train_loader = DataLoader(train_dataset, batch_size=CFG.batch_size, shuffle=True, pin_memory=True, num_workers=num_workers)
+        valid_loader = DataLoader(valid_dataset, batch_size=CFG.batch_size, shuffle=False, pin_memory=True, num_workers=num_workers)
+        test_loader = DataLoader(test_dataset, batch_size=CFG.batch_size, shuffle=False, pin_memory=True, num_workers=num_workers)
 
         CFG.steps_per_epoch = len(train_loader)
 
-        model = CustomEffNet()
-        lit_model = LitPrivacy(model)
+        lit_model = LitPrivacy()
 
-        # Explicit per-fold version instead of relying on CSVLogger's
-        # auto-incrementing version_N, which doesn't tell you which fold
-        # a given log directory belongs to and isn't stable across reruns.
-        logger = CSVLogger(
-            save_dir='logs/',
-            name=CFG.model_name,
-            version=f'fold_{fold}'
-        )
-
+        logger = CSVLogger(save_dir=run_dir, name='logs', version=f'fold{test_fold}')
         checkpoint_callback = ModelCheckpoint(
-            dirpath=f'checkpoints/{CFG.model_name}/fold_{fold}',
+            dirpath=os.path.join(run_dir, 'checkpoints', f'fold{test_fold}'),
             monitor='valid_loss',
             save_top_k=1,
             save_last=True,
@@ -219,16 +225,21 @@ if __name__ == "__main__":
             mode='min'
         )
 
+        early_stop_callback = EarlyStopping(
+            monitor='valid_loss',
+            patience=5,      # stop after 5 epochs with no improvement
+            mode='min',
+            verbose=True
+        )
+
         trainer = Trainer(
             max_epochs=CFG.num_epochs,
             accelerator="gpu" if torch.cuda.is_available() else "cpu",
             devices=1 if torch.cuda.is_available() else None,
             accumulate_grad_batches=CFG.accum,
-            callbacks=[checkpoint_callback],
+            callbacks=[checkpoint_callback,early_stop_callback],
             logger=logger,
         )
 
         trainer.fit(lit_model, train_dataloaders=train_loader, val_dataloaders=valid_loader)
-
-        # Breaking after first fold for standard training (remove break to run all folds)
-        #break
+        trainer.test(lit_model, dataloaders=test_loader, ckpt_path='best')

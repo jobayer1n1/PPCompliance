@@ -1,7 +1,9 @@
-from transformers import BertTokenizer, BertModel,BertConfig
+from transformers import BertTokenizer, BertModel
 import torch
+import torch.nn as nn
 import os
 import sys
+import argparse
 from pathlib import Path
 from bs4 import BeautifulSoup
 import csv
@@ -9,22 +11,39 @@ import csv
 SCRIPT_DIR = Path(__file__).resolve().parent
 TRAIN_DIR = SCRIPT_DIR.parent.parent / "NLP_models" / "BERT" / "bert_our_dataset"
 sys.path.insert(0, str(TRAIN_DIR))
-from train import CustomEffNet
+from train import CFG
 
 
-def load_customeffnet_state(model, checkpoint_path, device):
+class PrivacyClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.bert = BertModel.from_pretrained(CFG.model_name)
+        self.dropout = nn.Dropout(CFG.drop_rate)
+        self.classifier = nn.Linear(CFG.embed_dim, CFG.num_classes)
+
+    def forward(self, input_ids, attention_mask):
+        outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+        pooled_output = outputs.pooler_output
+        output = self.dropout(pooled_output)
+        return self.classifier(output)
+
+
+def load_privacy_classifier_state(model, checkpoint_path, device):
     checkpoint = torch.load(checkpoint_path, map_location=device)
     state_dict = checkpoint.get('state_dict', checkpoint)
 
-    # Lightning saves LitPrivacy.model(CustomEffNet.model(...)) as
-    # model.model.*, while plain CustomEffNet expects model.*.
-    if state_dict and all(key.startswith('model.model.') for key in state_dict):
-        state_dict = {
-            key.replace('model.model.', 'model.', 1): value
-            for key, value in state_dict.items()
-        }
-
     model.load_state_dict(state_dict)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        required=True,
+        help="Explicit .ckpt path produced by NLP_models/BERT/bert_our_dataset/train.py.",
+    )
+    return parser.parse_args()
 
 #split article into sentences
 import re
@@ -70,15 +89,14 @@ def split_into_sentences(text):
 
 
 # load model
+args = parse_args()
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-model = CustomEffNet()
-model_path = SCRIPT_DIR / 'models' / 'epoch=41-valid_loss=1.0552-valid_acc=0.7201.ckpt'
-load_customeffnet_state(model, model_path, device)
+model = PrivacyClassifier()
+load_privacy_classifier_state(model, args.checkpoint, device)
 model.to(device)
 model.eval()
-embeddingmodel = BertModel.from_pretrained("bert-base-uncased")
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
+tokenizer = BertTokenizer.from_pretrained(CFG.model_name)
 
 sm = torch.nn.Softmax(dim=-1)
 
@@ -123,11 +141,21 @@ for root, dirs, files in os.walk(policy_folder):
             sentences=split_into_sentences(text)
             for sentence in sentences:
                 if len(sentence)>20:
-                    a = tokenizer.encode(sentence, add_special_tokens=True)
-                    embedding_res = embeddingmodel(torch.tensor(a).unsqueeze(0))[1].detach().to(device)
+                    encoding = tokenizer.encode_plus(
+                        sentence,
+                        add_special_tokens=True,
+                        max_length=CFG.max_length,
+                        return_token_type_ids=False,
+                        padding='max_length',
+                        truncation=True,
+                        return_attention_mask=True,
+                        return_tensors='pt',
+                    )
+                    input_ids = encoding['input_ids'].to(device)
+                    attention_mask = encoding['attention_mask'].to(device)
 
                     with torch.no_grad():
-                        pred = model(embedding_res).squeeze()
+                        pred = model(input_ids, attention_mask).squeeze()
                     pred = sm(pred)
                     pred = pred.detach().cpu().tolist()
                     # pred_res=pred.index(max(pred))
@@ -156,11 +184,21 @@ with open(SCRIPT_DIR / 'privacy_conclude_result_last.csv','w') as f:
 '''        
 sentence = 'This site provides any third party cookies and makes no effort to track you.'
 
-a = tokenizer.encode(sentence, add_special_tokens=True)
-embedding_res = embeddingmodel(torch.tensor(a).unsqueeze(0))[1].detach().to(device)
+encoding = tokenizer.encode_plus(
+    sentence,
+    add_special_tokens=True,
+    max_length=CFG.max_length,
+    return_token_type_ids=False,
+    padding='max_length',
+    truncation=True,
+    return_attention_mask=True,
+    return_tensors='pt',
+)
+input_ids = encoding['input_ids'].to(device)
+attention_mask = encoding['attention_mask'].to(device)
 
 with torch.no_grad():
-    pred = model(embedding_res).squeeze()
+    pred = model(input_ids, attention_mask).squeeze()
 pred = sm(pred)
 
 pred = pred.detach().cpu().tolist()
