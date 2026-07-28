@@ -85,7 +85,7 @@ sm = torch.nn.Softmax(dim=-1)
 # load sentences
 # policy_folder = str(SCRIPT_DIR.parent / 'raw_data' / 'privacy_data')
 
-policy_folder = str(SCRIPT_DIR.parent / 'top10ext')
+policy_folder = str(SCRIPT_DIR / 'top10ext')
 
 policy_conclude_predict=[]
 policy_raw_result=[]
