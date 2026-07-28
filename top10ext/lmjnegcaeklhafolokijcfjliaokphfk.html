@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/static/svg/logo-128-nooutline.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  text-size-adjust: none;
+  font-size: 1rem;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -webkit-font-smoothing: antialiased;
+  font-family: system-ui, sans-serif;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration-skip-ink: auto;
+  color: currentColor;
+}
+:root {
+  --hardware-pixel: 1px;
+}
+
+@media (min-resolution: 2dppx) {
+  :root {
+    --hardware-pixel: 0.5px;
+  }
+}
+
+@media (min-resolution: 3dppx) {
+  :root {
+    --hardware-pixel: 0.33333px;
+  }
+}
+
+@media (min-resolution: 4dppx) {
+  :root {
+    --hardware-pixel: 0.25px;
+  }
+}
+
+
+/* 🌿 Primitives */
+:root {
+  /* Mode 1 */
+  /* color */
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-50: #fffbeb;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-50: #eff6ff;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-50: #ecfeff;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-cyan-700: #0e7490;
+  --color-cyan-800: #155e75;
+  --color-cyan-900: #164e63;
+  --color-cyan-950: #083344;
+  --color-dark-0: #09090b00;
+  --color-dark-10: #09090b1a;
+  --color-dark-100: #09090b;
+  --color-dark-2: #09090b05;
+  --color-dark-20: #09090b33;
+  --color-dark-30: #09090b4d;
+  --color-dark-4: #09090b0a;
+  --color-dark-40: #09090b66;
+  --color-dark-50: #09090b80;
+  --color-dark-6: #09090b0f;
+  --color-dark-60: #09090b99;
+  --color-dark-70: #09090bb2;
+  --color-dark-8: #09090b14;
+  --color-dark-80: #09090bcc;
+  --color-dark-90: #09090be5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+  --color-fuchsia-100: #fae8ff;
+  --color-fuchsia-200: #f5d0fe;
+  --color-fuchsia-300: #f0abfc;
+  --color-fuchsia-400: #e879f9;
+  --color-fuchsia-50: #fdf4ff;
+  --color-fuchsia-500: #d946ef;
+  --color-fuchsia-600: #c026d3;
+  --color-fuchsia-700: #a21caf;
+  --color-fuchsia-800: #86198f;
+  --color-fuchsia-900: #701a75;
+  --color-fuchsia-950: #4a044e;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-50: #f9fafb;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: #030712;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-50: #f0fdf4;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-green-950: #052e16;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-200: #c7d2fe;
+  --color-indigo-300: #a5b4fc;
+  --color-indigo-400: #818cf8;
+  --color-indigo-50: #eef2ff;
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4f46e5;
+  --color-indigo-700: #4338ca;
+  --color-indigo-800: #3730a3;
+  --color-indigo-900: #312e81;
+  --color-indigo-950: #1e1b4b;
+  --color-light-0: #ffffff00;
+  --color-light-10: #ffffff1a;
+  --color-light-100: #ffffff;
+  --color-light-2: #ffffff05;
+  --color-light-20: #ffffff33;
+  --color-light-30: #ffffff4d;
+  --color-light-4: #ffffff0a;
+  --color-light-40: #ffffff66;
+  --color-light-50: #ffffff80;
+  --color-light-6: #ffffff0f;
+  --color-light-60: #ffffff99;
+  --color-light-70: #ffffffb2;
+  --color-light-8: #ffffff14;
+  --color-light-80: #ffffffcc;
+  --color-light-90: #ffffffe5;
+  --color-lime-100: #ecfccb;
+  --color-lime-200: #d9f99d;
+  --color-lime-300: #bef264;
+  --color-lime-400: #a3e635;
+  --color-lime-50: #f7fee7;
+  --color-lime-500: #84cc16;
+  --color-lime-600: #65a30d;
+  --color-lime-700: #4d7c0f;
+  --color-lime-800: #3f6212;
+  --color-lime-900: #365314;
+  --color-lime-950: #1a2e05;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-50: #fafafa;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+  --color-orange-100: #ffedd5;
+  --color-orange-200: #fed7aa;
+  --color-orange-300: #fdba74;
+  --color-orange-400: #fb923c;
+  --color-orange-50: #fff7ed;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-orange-800: #9a3412;
+  --color-orange-900: #7c2d12;
+  --color-orange-950: #431407;
+  --color-pink-100: #fce7f3;
+  --color-pink-200: #fbcfe8;
+  --color-pink-300: #f9a8d4;
+  --color-pink-400: #f472b6;
+  --color-pink-50: #fdf2f8;
+  --color-pink-500: #ec4899;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
+  --color-pink-800: #9d174d;
+  --color-pink-900: #831843;
+  --color-pink-950: #500724;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  --color-purple-50: #faf5ff;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+  --color-purple-700: #7e22ce;
+  --color-purple-800: #6b21a8;
+  --color-purple-900: #581c87;
+  --color-purple-950: #3b0764;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-50: #fef2f2;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+  --color-rose-100: #ffe4e6;
+  --color-rose-200: #fecdd3;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-50: #fff1f2;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+  --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
+  --color-rose-900: #881337;
+  --color-rose-950: #4c0519;
+  --color-sky-100: #e0f2fe;
+  --color-sky-200: #bae6fd;
+  --color-sky-300: #7dd3fc;
+  --color-sky-400: #38bdf8;
+  --color-sky-50: #f0f9ff;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+  --color-sky-700: #0369a1;
+  --color-sky-800: #075985;
+  --color-sky-900: #0c4a6e;
+  --color-sky-950: #082f49;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-50: #f8fafc;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-50: #fafaf9;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+  --color-stone-800: #292524;
+  --color-stone-900: #1c1917;
+  --color-stone-950: #0c0a09;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-50: #f0fdfa;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  --color-teal-950: #042f2e;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-50: #f5f3ff;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-violet-700: #6d28d9;
+  --color-violet-800: #5b21b6;
+  --color-violet-900: #4c1d95;
+  --color-violet-950: #2e1065;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-200: #fef08a;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-50: #fefce8;
+  --color-yellow-500: #eab308;
+  --color-yellow-600: #ca8a04;
+  --color-yellow-700: #a16207;
+  --color-yellow-800: #854d0e;
+  --color-yellow-900: #713f12;
+  --color-yellow-950: #422006;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-50: #fafafa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+}
+
+/* 📏 Size scale (spacing, gaps, font-size, line-height, radius) */
+:root {
+  --2xs: 0.125rem; /* 2px  */
+  --xs:  0.25rem;  /* 4px  */
+  --sm:  0.5rem;   /* 8px  */
+  --md:  1rem;     /* 16px */
+  --lg:  1.5rem;   /* 24px */
+  --xl:  2rem;     /* 32px */
+  --2xl: 2.5rem;   /* 40px */
+  --3xl: 3rem;     /* 48px */
+  --4xl: 4rem;     /* 64px */
+  --5xl: 5rem;     /* 80px */
+}
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+box, hbox, vbox, spacer, stack, .vbox, .hbox {
+  flex-shrink: 0;
+  display: flex;
+  /*
+    These are necessary really.
+    Otherwise set to min-*: auto, messing up flex logic.
+  */
+  min-height: 0;
+  min-width: 0;
+}
+
+hbox, .hbox {
+  flex-flow: row;
+  text-overflow: ellipsis;
+}
+
+wrappable-text {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+vbox, .vbox {
+  flex-flow: column;
+  /* Not sure why I had that at some point… */
+  /* width: 100%; */
+}
+
+stack {
+  position: relative;
+  overflow: hidden;
+}
+
+stack > * {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+[wrap] { flex-wrap: wrap }
+[stretch] { align-self: stretch }
+[hidden="true"] { display: none!important; }
+
+[flex] { display: flex; flex-shrink: 1 }
+[flex="1"] { flex-grow: 1 }
+[flex="2"] { flex-grow: 2 }
+[flex="3"] { flex-grow: 3 }
+[flex="4"] { flex-grow: 4 }
+[flex="5"] { flex-grow: 5 }
+[flex="6"] { flex-grow: 6 }
+[flex="7"] { flex-grow: 7 }
+[flex="8"] { flex-grow: 8 }
+[flex="9"] { flex-grow: 9 }
+
+/* We don't use the align=… attribute. Browser engines map that into a text-align=center!!! */
+[xalign="start"] { align-items: flex-start }
+[xalign="center"] { align-items: center }
+[xalign="end"] { align-items: flex-end }
+[xalign="baseline"] { align-items: flex-baseline }
+[xalign="stretch"] { align-items: stretch }
+
+[pack="start"] { justify-content: flex-start }
+[pack="center"] { justify-content: center }
+[pack="end"] { justify-content: flex-end }
+
+/* DEBUG */
+
+[debug] hbox,
+[debug] vbox,
+[debug] box,
+[debug] spacer {
+  margin: 8px;
+  padding: 8px;
+  outline: 1px dashed black;
+  position: relative;
+}
+
+/* [debug] hbox { background: green; } */
+/* [debug] vbox { background: blue; } */
+/* [debug] spacer { background: yellow; } */
+/* [debug] box { background: orange; } */
+
+[debug] hbox:before,
+[debug] vbox:before,
+[debug] box:before {
+  position: absolute;
+  font-size: 6px;
+  top: 0; left: 0;
+  display: block;
+  content: attr(id);
+}
+:root {
+  --brand-yellow: #ffec25;
+  --brand-blue: #62b6e6;
+  --brand-blue-strong: #0b1834;
+  --brand-red: #df4252;
+
+  --surface-bg: var(--color-light-100);
+  --surface-fg: var(--color-neutral-950);
+  --surface-fg-muted: var(--color-neutral-700);
+
+  --btn-primary-bg: var(--color-zinc-950);
+  --btn-primary-text: var(--color-green-200);
+  --btn-primary-border: var(--color-green-200);
+  --btn-primary-icon: var(--color-green-200);
+
+  --btn-secondary-text: var(--color-slate-900);
+  --btn-secondary-border: var(--brand-blue-strong);
+  --btn-secondary-icon: var(--color-slate-900);
+
+  --ext-main-cta: #090e19;
+  --ext-stroke: var(--color-zinc-200);
+  --ext-blue: #0087cd;
+  --ext-blue-txt: #006ca7;
+  --ext-green-dark: #00682e;
+  --ext-green-highlight: #00a63d;
+  --ext-green-txt: #11674d;
+  --ext-bg-quality: #c6fce4;
+  --ext-main: var(--color-neutral-50);
+  --ext-second: var(--color-neutral-100);
+  --ext-third: var(--color-neutral-300);
+  --ext-txt: var(--color-neutral-800);
+  --ext-bg: var(--color-zinc-100);
+
+  /* Premium / pricing cards */
+  --premium-card-radius: 26px;
+  --premium-card-border: var(--color-slate-900);
+  --premium-card-shadow: 0px 20px 14px 0px rgba(42, 42, 42, 0.2);
+  --premium-icon-tile-radius: 15px;
+  --premium-hero-gradient-lifetime: linear-gradient(161deg, rgba(223, 66, 82, 0.1) 0%, rgba(98, 182, 230, 0.1) 100%);
+  --premium-hero-gradient-subscription: linear-gradient(161deg, rgba(255, 236, 37, 0.1) 0%, rgba(223, 66, 82, 0.06) 100%);
+}
+
+:root {
+  --font-display: "Google Sans", system-ui, sans-serif;
+  --font-mono: "Roboto Mono", ui-monospace, monospace;
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--surface-fg);
+  background: var(--surface-bg);
+}
+
+.t-h1, .t-h2, .t-h4, .t-h5 { font-family: var(--font-display); }
+
+.t-h1 { font-weight: 700; font-size: 3.5rem; line-height: 1.1; letter-spacing: -1px; }
+.t-h2 { font-weight: 600; font-size: 2.5rem; line-height: 1.2; }
+.t-h4 { font-weight: 600; font-size: 1.5rem; line-height: 1.75rem; }
+.t-h5 { font-weight: 600; font-size: 1.25rem; line-height: 1.75rem; }
+
+.t-p          { font-weight: 400; font-size: 1rem;     line-height: 1.5rem;  letter-spacing: -0.3px; }
+.t-p-strong   { font-weight: 500; font-size: 1rem;     line-height: 1.5rem;  letter-spacing: -0.3px; }
+.t-p14        { font-weight: 400; font-size: 0.875rem; line-height: 1.25rem; }
+.t-p14-strong { font-weight: 500; font-size: 0.875rem; line-height: 1.25rem; }
+.t-p20        { font-weight: 400; font-size: 1.25rem;  line-height: 1; }
+.t-p20-strong { font-weight: 500; font-size: 1.25rem;  line-height: 1.2; }
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: var(--sm);
+  border: 1px solid;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0;
+  transition: color 120ms, border-color 120ms, background 120ms, box-shadow 120ms;
+}
+.btn-link { letter-spacing: 0; }
+
+.btn-primary {
+  padding: var(--md) var(--2xl);
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-border);
+  color: var(--btn-primary-text);
+  font-weight: 400;
+}
+.btn-primary svg path { fill: var(--btn-primary-icon); }
+.btn-primary svg path[fill="none"] { fill: none; }
+.btn-primary svg path[stroke] { stroke: var(--btn-primary-icon); }
+.btn-primary:hover,
+.btn-primary:active {
+  border-color: var(--color-green-100);
+  color: var(--color-green-100);
+  font-weight: 500;
+}
+.btn-primary:hover svg path,
+.btn-primary:active svg path { fill: var(--color-green-100); }
+.btn-primary:hover svg path[fill="none"],
+.btn-primary:active svg path[fill="none"] { fill: none; }
+.btn-primary:hover svg path[stroke],
+.btn-primary:active svg path[stroke] { stroke: var(--color-green-100); }
+.btn-primary:active { box-shadow: 0 0 2px 2px var(--color-green-600); }
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] {
+  background: var(--color-zinc-400);
+  border-color: var(--color-neutral-50);
+  color: var(--color-neutral-50);
+  font-weight: 400;
+  cursor: not-allowed;
+}
+.btn-primary:disabled svg path,
+.btn-primary[aria-disabled="true"] svg path { fill: var(--color-neutral-50); }
+
+.btn-secondary {
+  padding: var(--md) var(--xl);
+  background: transparent;
+  border-color: var(--btn-secondary-border);
+  color: var(--btn-secondary-text);
+  font-weight: 500;
+}
+.btn-secondary svg path { fill: var(--btn-secondary-icon); }
+.btn-secondary:hover,
+.btn-secondary:active { font-weight: 700; }
+.btn-secondary .icon-hover { display: none; }
+.btn-secondary:hover .icon-default,
+.btn-secondary:active .icon-default { display: none; }
+.btn-secondary:hover .icon-hover,
+.btn-secondary:active .icon-hover { display: inline-flex; }
+.btn-secondary:active { box-shadow: 0 0 2px 2px var(--color-blue-950); }
+.btn-secondary:disabled,
+.btn-secondary[aria-disabled="true"] {
+  background: transparent;
+  border-color: var(--color-neutral-50);
+  color: var(--color-neutral-50);
+  font-weight: 400;
+  cursor: not-allowed;
+}
+.btn-secondary:disabled svg path,
+.btn-secondary[aria-disabled="true"] svg path { fill: var(--color-neutral-50); }
+
+.btn-sm {
+  padding: 0 12px;
+  height: var(--2xl);
+  font-size: 0.75rem;
+  line-height: var(--lg);
+}
+.btn-sm svg { width: 1.25rem; height: 1.25rem; }
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--md);
+  border-radius: var(--sm);
+  color: var(--color-gray-950);
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 120ms;
+}
+.btn-link:hover,
+.btn-link:active {
+  color: var(--color-slate-900);
+  font-weight: 500;
+}
+.btn-link:active { text-decoration: underline; }
+.btn-link[aria-disabled="true"] {
+  color: var(--color-gray-400);
+  font-weight: 400;
+  cursor: not-allowed;
+}
+
+.btn-spinner {
+  display: none;
+  width: 24px;
+  height: 24px;
+  border: 2.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: btn-spin 0.8s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+.is-loading { pointer-events: none; }
+.is-loading > svg:not(.btn-spinner) { display: none; }
+.is-loading > .btn-spinner { display: block; }
+
+.btn-primary.is-loading {
+  border-color: var(--color-green-100);
+  color: var(--color-green-100);
+  font-weight: 500;
+  box-shadow: 0 0 2px 2px var(--color-green-600);
+}
+.btn-primary .btn-spinner { color: var(--color-green-100); }
+.btn-secondary.is-loading { font-weight: 700; }
+.btn-secondary .btn-spinner { color: var(--color-light-100); }
+
+.checklist { gap: var(--sm); }
+.check-item { gap: var(--sm); }
+.check-item-text { color: var(--color-gray-800); margin: 0; }
+.check-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.check-icon--no  { background: var(--color-red-100); }
+.check-icon--yes { background: var(--color-green-100); }
+
+input[type="text"], input[type="email"] {
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--color-gray-800);
+  background: #ffffff;
+  border: 0.7px solid var(--brand-blue-strong);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+label input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+  border: 1px solid #0f172a;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+label input[type="radio"]:checked {
+  background: #00A63D;
+  box-shadow: inset 0 0 0 2px #ffffff;
+  border-color: #00A63D;
+}
+
+textarea {
+  width: 100%;
+  height: 111px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 24px;
+  color: #0a0a0a;
+  background: #ffffff;
+  border: 0.7px solid #1e293b;
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+textarea::placeholder {
+  color: #9ca3af;
+}
+
+@media(max-width: 500px) {
+  .t-h1 { font-size: 2rem }
+  .t-h2 { font-size: 2rem }
+  .t-h4 { font-size: 1rem }
+  .t-h5 { font-size: 1rem }
+}
+</style>
+    <title>Privacy Policy - Video Download Helper</title>
+    <style>
+      .privacy { padding: var(--5xl) var(--4xl); }
+      .privacy-inner { width: 100%; max-width: 824px; gap: var(--3xl); }
+      .privacy-section { width: 100%; gap: 30px; color: var(--ext-main-cta); }
+      .privacy-head-row {
+        width: 100%;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+      .privacy-title { color: var(--ext-main-cta); margin: 0; }
+      .privacy-updated { color: var(--ext-main-cta); }
+      .privacy-intro { color: var(--ext-main-cta); margin: 0; }
+      .privacy-h3 {
+        color: var(--ext-main-cta);
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 2rem;
+      }
+      .privacy-list {
+        color: var(--ext-main-cta);
+        padding-inline-start: var(--lg);
+        list-style: disc;
+        margin: 0;
+      }
+      .privacy-list li { margin: 0; }
+
+      /* Permissions table */
+      .perms { width: 100%; gap: var(--lg); }
+      .perms-head {
+        width: 100%;
+        gap: 1px;
+        align-items: stretch;
+      }
+      .perms-head > * {
+        background: var(--ext-bg-quality);
+        padding: 0 var(--md);
+        align-items: center;
+        color: var(--ext-main-cta);
+      }
+      .perms-head-perm { width: 294px; }
+      .perms-head-purpose { flex: 1; }
+      .perms-row { width: 100%; align-items: flex-start; }
+      .perms-keys { width: 294px; gap: 10px; flex-wrap: wrap; }
+      .perms-desc { flex: 1; padding: 0 var(--md); align-items: center; }
+      .perms-desc p { color: var(--color-dark-100); margin: 0; }
+      .perm-pill {
+        background: var(--ext-bg-quality);
+        border: 0.5px solid var(--ext-green-txt);
+        padding: 2px;
+        border-radius: 2px;
+        height: 16px;
+        align-items: center;
+        color: var(--color-neutral-950);
+        font-size: 0.75rem;
+        line-height: 10px;
+        letter-spacing: -0.0752px;
+      }
+
+      @media(max-width: 680px) {
+        .privacy-updated {
+          display: none;
+        }
+      }
+
+    </style>
+
+  </head>
+  <body>
+    <vbox flex="1">
+      <style>
+  .header { padding: 0 var(--4xl); min-height: var(--4xl); }
+  .header-logo { gap: var(--sm); text-decoration: none; }
+  .header-right { gap: var(--2xl); }
+  .header-nav { gap: var(--xl); }
+
+  @media(max-width: 500px) {
+    .header {
+      justify-content: center;
+    }
+    .header-right, .header spacer {
+      display: none;
+    }
+  }
+
+
+</style>
+
+<hbox class="header" wrap xalign="center">
+  <a class="header-logo hbox" xalign="center" href="/">
+    <svg width="31" height="31" viewBox="0 0 31 31" fill="none">
+  <path d="M18.4475 4.73573C15.6001 5.42015 13.0276 7.22793 11.4484 9.96449C11.4314 9.99391 11.4145 10.0244 11.3975 10.0539L11.3941 19.8258C11.221 19.8507 11.0457 19.8722 10.8714 19.8881C8.89175 20.0713 6.83738 19.6641 4.98438 18.5939C3.61443 17.802 2.5024 16.7352 1.67998 15.5021C1.45373 15.1627 1.24897 14.8109 1.06684 14.4489C-0.389091 11.5517 -0.404929 8.00173 1.33721 4.98461C4.0873 0.21854 10.1802 -1.41502 14.9462 1.33624C16.4293 2.19262 17.6092 3.37254 18.4475 4.73573Z" fill="#FFEC25"/>
+  <path d="M18.9904 25.2537C18.8694 25.5105 18.737 25.7651 18.5922 26.0162C18.5436 26.0999 18.4938 26.1836 18.4429 26.2662C15.6261 30.8388 9.66321 32.3661 4.98206 29.6634C0.383498 27.0072 -1.29755 21.2377 1.06565 16.5542C1.94237 17.7398 3.07137 18.7681 4.43001 19.5521C6.62125 20.8169 9.06477 21.2479 11.394 20.9436L18.6296 16.1141C18.711 16.2578 18.7891 16.4037 18.8637 16.5519C20.1986 19.2082 20.323 22.4142 18.9904 25.2549V25.2537Z" fill="#DF4252"/>
+  <path d="M29.6616 20.482C27.6559 23.955 23.8752 25.765 20.1273 25.4245C21.5505 22.1416 21.2586 18.4604 19.5527 15.4987L12.3205 10.6715C12.3488 10.6206 12.5049 10.3514 12.5558 10.2688C14.0423 7.85579 16.4044 6.29123 18.9927 5.74822C19.3671 5.66903 19.7472 5.61247 20.1296 5.5774C22.1093 5.39526 24.1637 5.80139 26.0167 6.87158C30.7815 9.62284 32.4139 15.7159 29.6627 20.482H29.6616Z" fill="#62B6E6"/>
+</svg>
+<svg width="166" height="14" viewBox="0 0 166 14" fill="none">
+  <path d="M3.97578 10.9689L0 0.00113152H2.11989L5.19832 8.72893L8.26202 0.00113152H10.3819L6.39026 10.9689H3.97692H3.97578ZM11.0175 10.9689V2.71959H12.9981V10.9689H11.0175ZM10.9869 1.7614V0H13.0445V1.7614H10.9869ZM17.614 11.1544C16.9127 11.1544 16.3042 10.979 15.7887 10.6295C15.2834 10.2788 14.8913 9.77989 14.6126 9.13054C14.3339 8.48118 14.1945 7.71983 14.1945 6.84423C14.1945 5.96862 14.3339 5.20727 14.6126 4.55792C14.8913 3.90856 15.2879 3.40967 15.8034 3.05897C16.319 2.70828 16.9229 2.53406 17.614 2.53406C18.1918 2.53406 18.6972 2.65284 19.13 2.88928C19.5741 3.12572 19.9084 3.46058 20.1361 3.89386V0.00113152H22.1166V10.9689H20.229L20.1826 9.74822C19.956 10.1905 19.6149 10.5356 19.1617 10.7833C18.7074 11.03 18.1918 11.1544 17.614 11.1544ZM18.2168 9.54798C18.6292 9.54798 18.9748 9.44503 19.2535 9.23914C19.5424 9.03325 19.7588 8.72893 19.9038 8.32733C20.0579 7.91554 20.1361 7.42118 20.1361 6.84423C20.1361 6.26727 20.0591 5.76273 19.9038 5.36112C19.7588 4.95952 19.5424 4.65521 19.2535 4.44931C18.9748 4.24342 18.6292 4.14047 18.2168 4.14047C17.6185 4.14047 17.1393 4.38257 16.7778 4.86675C16.4277 5.34076 16.2521 5.99916 16.2521 6.84423C16.2521 7.68929 16.4277 8.32733 16.7778 8.8217C17.1393 9.30589 17.6185 9.54798 18.2168 9.54798ZM27.3592 11.1544C26.5343 11.1544 25.8171 10.979 25.2087 10.6295C24.6002 10.2686 24.1312 9.76405 23.8003 9.11583C23.4706 8.46648 23.3052 7.70965 23.3052 6.84536C23.3052 5.98106 23.4706 5.22876 23.8003 4.58959C24.13 3.94024 24.5946 3.43569 25.1928 3.07594C25.8012 2.71506 26.5083 2.53519 27.3127 2.53519C28.1171 2.53519 28.7822 2.71054 29.3703 3.0601C29.9685 3.4108 30.4274 3.91535 30.748 4.57375C31.0687 5.23216 31.2273 6.02631 31.2273 6.95283V7.40082H25.3639C25.4047 8.12144 25.6007 8.66784 25.9519 9.03777C26.3134 9.39865 26.7881 9.57852 27.375 9.57852C27.818 9.57852 28.1851 9.48123 28.4741 9.28552C28.7732 9.07963 28.9794 8.79681 29.0927 8.43593L31.1197 8.55924C30.8931 9.36245 30.4444 9.99596 29.7736 10.4598C29.1131 10.9236 28.3086 11.1544 27.3603 11.1544H27.3592ZM25.3628 6.07156H29.1845C29.1437 5.40185 28.9522 4.90748 28.6123 4.58846C28.2724 4.25926 27.8384 4.09409 27.3127 4.09409C26.787 4.09409 26.3485 4.26378 25.9973 4.6043C25.6562 4.94368 25.4455 5.43352 25.3628 6.07156ZM36.0166 11.1544C35.202 11.1544 34.4848 10.979 33.8661 10.6295C33.2577 10.2686 32.7829 9.76405 32.443 9.11583C32.1133 8.46648 31.9479 7.70965 31.9479 6.84536C31.9479 5.98106 32.1133 5.21292 32.443 4.57488C32.7841 3.92553 33.2577 3.42664 33.8661 3.07594C34.4848 2.71506 35.202 2.53519 36.0166 2.53519C36.8312 2.53519 37.5428 2.71506 38.1523 3.07594C38.7608 3.42664 39.2299 3.92553 39.5596 4.57488C39.9006 5.21292 40.0706 5.97088 40.0706 6.84536C40.0706 7.71984 39.9006 8.46761 39.5596 9.11583C39.2299 9.76518 38.7608 10.2697 38.1523 10.6295C37.5439 10.9802 36.8324 11.1544 36.0166 11.1544ZM36.0166 9.54798C36.6568 9.54798 37.1462 9.31154 37.4861 8.83754C37.8362 8.36353 38.0119 7.69947 38.0119 6.84423C38.0119 5.98898 37.8362 5.34076 37.4861 4.86675C37.1451 4.38257 36.6556 4.14047 36.0166 4.14047C35.3776 4.14047 34.8824 4.38257 34.5312 4.86675C34.1811 5.34076 34.0055 5.99916 34.0055 6.84423C34.0055 7.68929 34.1811 8.36353 34.5312 8.83754C34.8813 9.31154 35.3764 9.54798 36.0166 9.54798ZM44.8655 10.9689V0.00113152H48.5173C50.2701 0.00113152 51.6161 0.479661 52.5554 1.43785C53.5048 2.38586 53.9784 3.74 53.9784 5.50027C53.9784 7.26054 53.5139 8.59997 52.586 9.54798C51.658 10.496 50.3324 10.9689 48.6102 10.9689H44.8667H44.8655ZM46.8766 9.2233H48.5173C49.6616 9.2233 50.5125 8.91446 51.07 8.29679C51.6274 7.67911 51.905 6.74694 51.905 5.50027C51.905 4.2536 51.6263 3.29088 51.07 2.67321C50.5125 2.05553 49.6616 1.74669 48.5173 1.74669H46.8766V9.2233ZM59.1043 11.1544C58.2896 11.1544 57.5724 10.979 56.9538 10.6295C56.3453 10.2686 55.8706 9.76405 55.5307 9.11583C55.201 8.46648 55.0356 7.70965 55.0356 6.84536C55.0356 5.98106 55.201 5.21292 55.5307 4.57488C55.8717 3.92553 56.3453 3.42664 56.9538 3.07594C57.5724 2.71506 58.2896 2.53519 59.1043 2.53519C59.9189 2.53519 60.6304 2.71506 61.2389 3.07594C61.8473 3.42664 62.3164 3.92553 62.6472 4.57488C62.9883 5.21292 63.1582 5.97088 63.1582 6.84536C63.1582 7.71984 62.9883 8.46761 62.6472 9.11583C62.3175 9.76518 61.8473 10.2697 61.2389 10.6295C60.6304 10.9802 59.9189 11.1544 59.1043 11.1544ZM59.1043 9.54798C59.7433 9.54798 60.2339 9.31154 60.5738 8.83754C60.9239 8.36353 61.0995 7.69947 61.0995 6.84423C61.0995 5.98898 60.9239 5.34076 60.5738 4.86675C60.2327 4.38257 59.7433 4.14047 59.1043 4.14047C58.4652 4.14047 57.9701 4.38257 57.6189 4.86675C57.2676 5.34076 57.0931 5.99916 57.0931 6.84423C57.0931 7.68929 57.2687 8.36353 57.6189 8.83754C57.969 9.31154 58.4641 9.54798 59.1043 9.54798ZM65.7834 10.9689L63.2919 2.71959H65.3189L66.9278 8.72893L68.5831 2.71959H70.3155L71.9867 8.72893L73.5956 2.71959H75.6226L73.1311 10.9689H71.0882L69.4488 5.43805L67.824 10.9689H65.7823H65.7834ZM76.3353 10.9689V2.71959H78.13L78.2071 5.03645L77.9748 4.94368C78.0575 4.36673 78.2274 3.90404 78.4858 3.55334C78.7441 3.20265 79.058 2.94585 79.4296 2.78068C79.8012 2.61551 80.208 2.53406 80.6521 2.53406C81.2606 2.53406 81.7716 2.66755 82.184 2.93566C82.6066 3.20378 82.9261 3.5737 83.1436 4.04771C83.36 4.51153 83.4688 5.05228 83.4688 5.66996V10.9689H81.4883V6.30348C81.4883 5.83965 81.4418 5.44823 81.3489 5.12921C81.256 4.81019 81.1019 4.5681 80.8844 4.40293C80.6782 4.22758 80.3994 4.14047 80.0493 4.14047C79.5236 4.14047 79.0999 4.326 78.7804 4.69706C78.471 5.06812 78.3158 5.60321 78.3158 6.30348V10.9689H76.3353ZM87.1081 10.9689C86.5099 10.9689 86.0306 10.8139 85.6692 10.505C85.3077 10.1962 85.1276 9.70183 85.1276 9.02193V0H87.1081V8.82057C87.1081 9.02646 87.1591 9.18145 87.2633 9.28439C87.3766 9.38734 87.5307 9.43938 87.7279 9.43938H88.3318V10.9689H87.1092H87.1081ZM92.8423 11.1544C92.0277 11.1544 91.3105 10.979 90.6919 10.6295C90.0834 10.2686 89.6087 9.76405 89.2688 9.11583C88.9391 8.46648 88.7736 7.70965 88.7736 6.84536C88.7736 5.98106 88.9391 5.21292 89.2688 4.57488C89.6087 3.92553 90.0834 3.42664 90.6919 3.07594C91.3105 2.71506 92.0277 2.53519 92.8423 2.53519C93.657 2.53519 94.3685 2.71506 94.9769 3.07594C95.5854 3.42664 96.0545 3.92553 96.3853 4.57488C96.7252 5.21292 96.8963 5.97088 96.8963 6.84536C96.8963 7.71984 96.7263 8.46761 96.3853 9.11583C96.0556 9.76518 95.5854 10.2697 94.9769 10.6295C94.3685 10.9802 93.657 11.1544 92.8423 11.1544ZM92.8423 9.54798C93.4814 9.54798 93.972 9.31154 94.3119 8.83754C94.6631 8.36353 94.8376 7.69947 94.8376 6.84423C94.8376 5.98898 94.662 5.34076 94.3119 4.86675C93.972 4.38257 93.4814 4.14047 92.8423 4.14047C92.2033 4.14047 91.7082 4.38257 91.3569 4.86675C91.0057 5.34076 90.8312 5.99916 90.8312 6.84423C90.8312 7.68929 91.0068 8.36353 91.3569 8.83754C91.707 9.31154 92.2022 9.54798 92.8423 9.54798ZM100.596 11.1544C99.7289 11.1544 99.0332 10.9587 98.5063 10.5673C97.9806 10.1657 97.7177 9.60907 97.7177 8.89863C97.7177 8.18818 97.9398 7.63159 98.3828 7.22999C98.8258 6.82839 99.5023 6.53991 100.41 6.36456L103.148 5.82381C103.148 5.23668 103.015 4.79888 102.746 4.5104C102.479 4.21174 102.081 4.06242 101.555 4.06242C101.081 4.06242 100.704 4.17554 100.426 4.4018C100.157 4.61787 99.9713 4.93237 99.8682 5.34415L97.8571 5.25139C98.0225 4.37578 98.4248 3.70606 99.0638 3.24337C99.7028 2.76937 100.533 2.53293 101.554 2.53293C102.73 2.53293 103.617 2.83159 104.216 3.4289C104.824 4.01603 105.129 4.85997 105.129 5.96183V8.95858C105.129 9.17466 105.165 9.32399 105.238 9.40657C105.32 9.48915 105.438 9.52988 105.593 9.52988H105.856V10.9666C105.794 10.987 105.691 11.0028 105.547 11.013C105.413 11.0232 105.273 11.0288 105.129 11.0288C104.788 11.0288 104.484 10.9768 104.216 10.8738C103.947 10.7607 103.741 10.5695 103.597 10.3025C103.452 10.0242 103.381 9.64866 103.381 9.17466L103.551 9.29797C103.468 9.65884 103.288 9.98239 103.009 10.2709C102.74 10.5492 102.401 10.7652 101.988 10.9202C101.576 11.0752 101.111 11.1521 100.596 11.1521V11.1544ZM100.998 9.71767C101.441 9.71767 101.823 9.63056 102.143 9.45521C102.463 9.27987 102.71 9.03777 102.885 8.72893C103.061 8.42009 103.148 8.05469 103.148 7.6316V7.16777L101.013 7.59992C100.57 7.69268 100.25 7.83183 100.054 8.01736C99.8682 8.19271 99.7753 8.42462 99.7753 8.7131C99.7753 9.03212 99.8784 9.27987 100.085 9.45408C100.301 9.62943 100.606 9.71654 100.998 9.71654V9.71767ZM109.644 11.1544C108.943 11.1544 108.334 10.979 107.819 10.6295C107.313 10.2788 106.921 9.77989 106.643 9.13054C106.364 8.48118 106.226 7.71983 106.226 6.84423C106.226 5.96862 106.365 5.20727 106.643 4.55792C106.921 3.90856 107.318 3.40967 107.835 3.05897C108.35 2.70828 108.954 2.53406 109.645 2.53406C110.223 2.53406 110.728 2.65284 111.161 2.88928C111.605 3.12572 111.939 3.46058 112.167 3.89386V0.00113152H114.148V10.9689H112.26L112.214 9.74822C111.987 10.1905 111.646 10.5356 111.193 10.7833C110.738 11.03 110.223 11.1544 109.645 11.1544H109.644ZM110.248 9.54798C110.66 9.54798 111.006 9.44503 111.285 9.23914C111.574 9.03325 111.79 8.72893 111.935 8.32733C112.089 7.91554 112.167 7.42118 112.167 6.84423C112.167 6.26727 112.09 5.76273 111.935 5.36112C111.79 4.95952 111.574 4.65521 111.285 4.44931C111.006 4.24342 110.66 4.14047 110.248 4.14047C109.65 4.14047 109.169 4.38257 108.809 4.86675C108.459 5.34076 108.283 5.99916 108.283 6.84423C108.283 7.68929 108.459 8.32733 108.809 8.8217C109.17 9.30589 109.65 9.54798 110.248 9.54798ZM119.43 10.9689V0.00113152H121.441V5.23781L120.513 4.57375H126.98L126.067 5.23781V0.00113152H128.078V10.9689H126.067V5.66996L126.98 6.31931H120.513L121.441 5.66996V10.9689H119.43ZM133.47 11.1544C132.646 11.1544 131.928 10.979 131.32 10.6295C130.711 10.2686 130.242 9.76405 129.912 9.11583C129.582 8.46648 129.416 7.70965 129.416 6.84536C129.416 5.98106 129.582 5.22876 129.912 4.58959C130.241 3.94024 130.706 3.43569 131.304 3.07594C131.912 2.71506 132.619 2.53519 133.424 2.53519C134.228 2.53519 134.893 2.71054 135.481 3.0601C136.08 3.4108 136.539 3.91535 136.859 4.57375C137.179 5.23329 137.338 6.02631 137.338 6.95283V7.40082H131.475C131.516 8.12144 131.712 8.66784 132.063 9.03777C132.425 9.39865 132.899 9.57852 133.486 9.57852C133.929 9.57852 134.296 9.48123 134.585 9.28552C134.884 9.07963 135.091 8.79681 135.204 8.43593L137.231 8.55924C137.004 9.36245 136.556 9.99596 135.885 10.4598C135.224 10.9236 134.42 11.1544 133.471 11.1544H133.47ZM131.475 6.07156H135.297C135.256 5.40185 135.065 4.90748 134.725 4.58846C134.385 4.25926 133.951 4.09409 133.425 4.09409C132.899 4.09409 132.461 4.26378 132.11 4.6043C131.769 4.94368 131.558 5.43352 131.475 6.07156ZM140.595 10.9689C139.997 10.9689 139.517 10.8139 139.156 10.505C138.794 10.1962 138.614 9.70183 138.614 9.02193V0H140.595V8.82057C140.595 9.02646 140.646 9.18145 140.749 9.28439C140.862 9.38734 141.017 9.43938 141.213 9.43938H141.817V10.9689H140.595ZM142.83 13.2857V2.71959H144.734L144.78 4.48099L144.579 4.38822C144.785 3.78073 145.12 3.32256 145.585 3.01372C146.059 2.6947 146.611 2.53519 147.24 2.53519C148.024 2.53519 148.673 2.7309 149.19 3.12232C149.716 3.51375 150.108 4.03413 150.366 4.68236C150.624 5.33171 150.752 6.05233 150.752 6.84536C150.752 7.63838 150.619 8.35901 150.35 9.00836C150.092 9.65771 149.7 10.177 149.174 10.5684C148.659 10.9598 148.008 11.1555 147.224 11.1555C146.812 11.1555 146.425 11.0831 146.064 10.9395C145.714 10.7958 145.409 10.5888 145.152 10.3218C144.905 10.0537 144.729 9.7403 144.626 9.37942L144.812 9.22443V13.2868H142.831L142.83 13.2857ZM146.76 9.54798C147.358 9.54798 147.827 9.31154 148.167 8.83754C148.518 8.35335 148.693 7.68929 148.693 6.84423C148.693 5.99916 148.517 5.34076 148.167 4.86675C147.827 4.38257 147.358 4.14047 146.76 4.14047C146.357 4.14047 146.012 4.24342 145.723 4.44931C145.434 4.64502 145.207 4.94368 145.042 5.34528C144.887 5.74689 144.81 6.24691 144.81 6.84423C144.81 7.44154 144.887 7.94156 145.042 8.34317C145.196 8.74477 145.418 9.04909 145.707 9.25498C146.006 9.45069 146.356 9.54798 146.76 9.54798ZM155.514 11.1544C154.69 11.1544 153.972 10.979 153.364 10.6295C152.756 10.2686 152.286 9.76405 151.957 9.11583C151.627 8.46648 151.462 7.70965 151.462 6.84536C151.462 5.98106 151.627 5.22876 151.957 4.58959C152.286 3.94024 152.751 3.43569 153.349 3.07594C153.958 2.71506 154.665 2.53519 155.469 2.53519C156.274 2.53519 156.939 2.71054 157.527 3.0601C158.125 3.4108 158.584 3.91535 158.903 4.57375C159.223 5.23216 159.383 6.02631 159.383 6.95283V7.40082H153.519C153.56 8.12144 153.756 8.66784 154.107 9.03777C154.469 9.39865 154.943 9.57852 155.53 9.57852C155.973 9.57852 156.34 9.48123 156.629 9.28552C156.928 9.07963 157.135 8.79681 157.248 8.43593L159.275 8.55924C159.048 9.36245 158.6 9.99596 157.929 10.4598C157.268 10.9236 156.464 11.1544 155.516 11.1544H155.514ZM153.519 6.07156H157.341C157.299 5.40185 157.109 4.90748 156.769 4.58846C156.429 4.25926 155.995 4.09409 155.469 4.09409C154.943 4.09409 154.505 4.26378 154.154 4.6043C153.814 4.94368 153.602 5.43352 153.519 6.07156ZM160.584 10.9689V2.71959H162.441L162.518 5.0059L162.348 4.97536C162.471 4.18233 162.704 3.61104 163.043 3.26034C163.394 2.89946 163.868 2.71959 164.467 2.71959H165.225V4.41877H164.451C164.028 4.41877 163.677 4.48099 163.398 4.6043C163.119 4.72761 162.907 4.92332 162.764 5.19143C162.63 5.44936 162.562 5.78874 162.562 6.21071V10.9689H160.581H160.584Z" fill="#0A0A0A"/>
+</svg>
+  </a>
+
+  <spacer flex="1"></spacer>
+
+  <hbox class="header-right" xalign="center">
+    <hbox class="header-nav" xalign="center">
+      <a class="btn-link" href="https://help.downloadhelper.net/#contact">Support</a>
+      <a class="btn-link" href="/premium">Premium</a>
+    </hbox>
+    <a class="btn-primary btn-sm" href="https://chromewebstore.google.com/detail/video-downloadhelper/lmjnegcaeklhafolokijcfjliaokphfk">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17316C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8078C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C21.9972 9.34869 20.9427 6.80678 19.068 4.93202C17.1932 3.05727 14.6513 2.0028 12 2ZM12 3.53846C13.4083 3.53904 14.7941 3.8911 16.0319 4.56272C17.2697 5.23435 18.3203 6.20429 19.0885 7.38461H12C11.0284 7.3857 10.0819 7.69286 9.29482 8.26246C8.50774 8.83206 7.92011 9.63515 7.61539 10.5577L5.39616 6.71154C6.18825 5.72099 7.19315 4.92143 8.33634 4.37214C9.47953 3.82285 10.7317 3.53791 12 3.53846ZM15.0769 12C15.0769 12.6086 14.8965 13.2034 14.5584 13.7094C14.2203 14.2154 13.7397 14.6098 13.1775 14.8427C12.6153 15.0756 11.9966 15.1365 11.3997 15.0178C10.8029 14.8991 10.2546 14.606 9.82429 14.1757C9.39397 13.7454 9.10093 13.1971 8.9822 12.6003C8.86348 12.0034 8.92441 11.3847 9.1573 10.8225C9.39018 10.2603 9.78456 9.77973 10.2906 9.44163C10.7966 9.10353 11.3914 8.92308 12 8.92308C12.8161 8.92308 13.5987 9.24725 14.1757 9.82429C14.7527 10.4013 15.0769 11.1839 15.0769 12ZM3.53847 12C3.53687 10.6676 3.85193 9.35399 4.4577 8.16731L8.00289 14.3077C8.00866 14.3173 8.01539 14.326 8.02116 14.3346C8.50977 15.1683 9.24773 15.8276 10.131 16.2195C11.0142 16.6115 11.9982 16.7163 12.9442 16.5192L10.7231 20.3654C8.72443 20.0575 6.90175 19.0451 5.58419 17.511C4.26663 15.9769 3.54104 14.0222 3.53847 12ZM12.451 20.449L15.9971 14.3077C16.0048 14.2942 16.0106 14.2808 16.0183 14.2673C16.494 13.4283 16.6943 12.4611 16.5907 11.5023C16.4872 10.5434 16.0852 9.64118 15.4413 8.92308H19.8846C20.3713 10.1701 20.5552 11.5148 20.4212 12.8467C20.2871 14.1787 19.839 15.4598 19.1136 16.5848C18.3882 17.7099 17.4062 18.6468 16.2483 19.3185C15.0904 19.9903 13.7896 20.3777 12.4529 20.449H12.451Z"/>
+</svg>
+      Add to Chrome
+    </a>
+  </hbox>
+</hbox>
+      <vbox class="privacy" xalign="center">
+        <vbox class="privacy-inner">
+
+          <vbox class="privacy-section">
+            <hbox class="privacy-head-row">
+              <h1 class="privacy-title t-h1">Privacy Policy</h1>
+              <span class="privacy-updated t-p">Last updated: June 1st, 2026</span>
+            </hbox>
+            <p class="privacy-intro t-p">We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share information about you when you use our video downloader extension.</p>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">What We Don't Do</h3>
+            <ul class="privacy-list t-p">
+              <li>We do not run analytics, automatized crash reporting, advertising, or tracking of any kind.</li>
+              <li>We never transmit your usage data to our servers or third parties.</li>
+            </ul>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">What We Do (Locally Only)</h3>
+            <ul class="privacy-list t-p">
+              <li>Detect videos on pages you visit by scanning network requests.</li>
+              <li>Manage downloads through your browser.</li>
+              <li>Store preferences and download history locally for your convenience (to re-download, etc.). It never leaves your device and you can clear it anytime.</li>
+              <li>Clear temporary detection data automatically when you close the browser.</li>
+              <li>Browsing data is used only to power the user-facing feature of detecting and downloading media, and never for ads, analytics, or data sales.</li>
+            </ul>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">Browser Permissions &amp; Purpose</h3>
+            <p class="privacy-intro t-p">These permissions enable video detection and downloads. They are used strictly for functionality, not tracking.</p>
+            <vbox class="perms">
+              <hbox class="perms-head">
+                <hbox class="perms-head-perm">
+                  <span class="t-p-strong">Permission</span>
+                </hbox>
+                <hbox class="perms-head-purpose">
+                  <span class="t-p-strong">Purpose</span>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">tabs</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Read the current tab's address and list your open tabs so detected media can be linked to the page it came from. Only accessed when you interact with the extension.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" wrap xalign="start">
+                  <span class="perm-pill">webRequest</span>
+                  <span class="perm-pill">webNavigation</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Watch network requests and page navigation to detect media streams (HLS, DASH, and progressive audio/video) and collect the metadata needed to present download options. Requests are inspected locally and never logged or transmitted.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">declarativeNetRequest</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Apply browser-side request rules so protected media can be fetched for download. These rules run inside the browser; the extension does not read your traffic through this API.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">scripting</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Inject small helper scripts into specific supported sites to locate the media element on the page. They run only where detection requires them.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" wrap xalign="start">
+                  <span class="perm-pill">downloads</span>
+                  <span class="perm-pill">downloads.open</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Start, track, and manage downloads through the browser, and open a finished file when you ask. The "downloads.open" permission is optional, requested only if you choose to open files.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" wrap xalign="start">
+                  <span class="perm-pill">storage</span>
+                  <span class="perm-pill">unlimitedStorage</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Keep your settings and download history on your device, and temporarily hold media data while a download or conversion is in progress. This data stays local.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">offscreen</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Run a hidden offscreen document to process media locally (such as merging audio and video or converting formats) using browser APIs the background worker cannot use. Nothing leaves your device.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">notifications</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Show a notification when a download completes or fails.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">contextMenus</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Add right-click menu entries so you can start downloads directly from the page.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">sidePanel</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Display the extension's interface in the browser side panel.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">browsingData</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Clear a page's cookies when you use "Force detection" to reload it. This is an optional permission.</p>
+                </hbox>
+              </hbox>
+              <hbox class="perms-row">
+                <hbox class="perms-keys" xalign="start">
+                  <span class="perm-pill">&lt;all_urls&gt;</span>
+                </hbox>
+                <hbox class="perms-desc">
+                  <p class="t-p">Host access lets the extension run on any website so it can detect and download media on the pages you choose to use it on. Detection happens locally, and your browsing is never tracked or sent anywhere.</p>
+                </hbox>
+              </hbox>
+            </vbox>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">What "Report" button does</h3>
+            <ul class="privacy-list t-p">
+              <li>When you click on the report button, we send the address of the web page to our server.</li>
+              <li>We store the extension version number, user agent, bug stack trace, and the origin of the download.</li>
+              <li>We do not use or store any details about the identity of the bug reporter.</li>
+              <li>No IP, no fingerprinting, no cookies, no ids. The bug report is anonymous.</li>
+            </ul>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">Ruleset ping</h3>
+            <ul class="privacy-list t-p">
+              <li>Every 24 hours, the webextension fetches a JSON file from our server.</li>
+              <li>While doing so, no information is sent from the webextension to the server.</li>
+              <li>That JSON file contains some up-to-date behavior instructions for the video detection mechanism.</li>
+            </ul>
+          </vbox>
+
+          <vbox class="privacy-section">
+            <h3 class="privacy-h3">Data Security</h3>
+            <ul class="privacy-list t-p">
+              <li>All video detection, media processing, and downloading happens locally in your browser.</li>
+              <li>We do not transmit your browsing or usage data to our servers. The only network activity is the daily ruleset fetch and the anonymous bug report you choose to send, both described above.</li>
+              <li>Removing the extension deletes all local data.</li>
+            </ul>
+          </vbox>
+
+        </vbox>
+      </vbox>
+      <style>
+  .footer {
+    background: var(--color-zinc-950);
+    padding: var(--xl) var(--4xl);
+    gap: var(--xl);
+  }
+  .footer-top { width: 100%; flex-wrap: wrap; gap: var(--4xl); }
+  .footer-brand {
+    max-width: 337px; gap: var(--md);
+  }
+  .footer-logo { gap: 8.814px; }
+  .footer-spacer {
+    max-width: 220px;
+  }
+  .footer-tagline {
+    color: #99a1af;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -0.042px;
+    margin: 0;
+  }
+  .footer-links {
+    flex: 1 1 320px;
+    flex-wrap: wrap;
+    gap: var(--xl);
+  }
+  .footer-col { flex: 1 1 auto; gap: var(--md); }
+  .footer-col-title { color: #fff; margin: 0; white-space: nowrap; }
+  .footer-list { gap: var(--sm); }
+  .btn-donate {
+    color: #99a1af; border-color: #99a1af;
+    height: 32px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+  .footer-list a {
+    color: #99a1af;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -0.042px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .footer-list a:hover { color: #fff; }
+  .footer-dl-item {
+    gap: 10px;
+    color: #99a1af;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -0.1504px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .footer-dl-item svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .footer-bottom {
+    width: 100%;
+    border-top: 1px solid #1e2939;
+    padding-top: 33px;
+  }
+  .footer-copyright {
+    color: #99a1af;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: -0.042px;
+    margin: 0;
+  }
+  .lang-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sm);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: var(--color-neutral-300);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    cursor: pointer;
+  }
+  .lang-trigger svg { width: 20px; height: 20px; transform: rotate(180deg); }
+
+  /* Few languages modal - Figma node 658:7043 */
+  .lang-modal {
+    width: 400px;
+    max-width: calc(100vw - var(--xl));
+    margin: auto;
+    padding: var(--2xl) var(--lg);
+    border: none;
+    border-radius: 20px;
+    background: var(--color-light-100);
+    color: var(--ext-main-cta);
+    filter: drop-shadow(0 10px 5px rgba(11, 24, 52, 0.2));
+  }
+  .lang-modal::backdrop { background: rgba(0, 0, 0, 0.4); }
+  .lang-modal-form { display: flex; flex-direction: column; gap: var(--2xl); }
+  .lang-modal-head { width: 100%; }
+  .lang-modal-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: var(--color-zinc-950);
+    margin: 0;
+    max-width: 269px;
+  }
+  .lang-modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    border-radius: 100px;
+    background: var(--color-zinc-400);
+    cursor: pointer;
+  }
+  .lang-modal-close svg { width: 18px; height: 18px; }
+  .lang-modal-list { width: 100%; gap: var(--xs); }
+  .lang-modal-item {
+    width: 100%;
+    padding: var(--sm);
+    color: var(--ext-main-cta);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+    text-transform: capitalize;
+  }
+  .lang-modal-item[aria-current="true"] { font-weight: 500; }
+  .lang-modal-item[aria-disabled="true"] { color: var(--color-neutral-400); cursor: not-allowed; pointer-events: none; }
+  .lang-modal-item:hover { background: rgba(9, 9, 11, 0.02); }
+  .lang-modal-item .check { color: var(--color-green-700); }
+  .lang-modal-item .check svg { width: 20px; height: 20px; display: block; }
+  .lang-modal-foot { width: 100%; }
+</style>
+
+<vbox class="footer" xalign="center">
+  <hbox class="footer-top" xalign="start">
+    <vbox class="footer-brand" xalign="start">
+      <hbox class="footer-logo" xalign="center">
+        <svg width="31" height="31" viewBox="0 0 31 31" fill="none">
+  <path d="M18.4475 4.73573C15.6001 5.42015 13.0276 7.22793 11.4484 9.96449C11.4314 9.99391 11.4145 10.0244 11.3975 10.0539L11.3941 19.8258C11.221 19.8507 11.0457 19.8722 10.8714 19.8881C8.89175 20.0713 6.83738 19.6641 4.98438 18.5939C3.61443 17.802 2.5024 16.7352 1.67998 15.5021C1.45373 15.1627 1.24897 14.8109 1.06684 14.4489C-0.389091 11.5517 -0.404929 8.00173 1.33721 4.98461C4.0873 0.21854 10.1802 -1.41502 14.9462 1.33624C16.4293 2.19262 17.6092 3.37254 18.4475 4.73573Z" fill="#ffffff"/>
+  <path d="M18.9904 25.2537C18.8694 25.5105 18.737 25.7651 18.5922 26.0162C18.5436 26.0999 18.4938 26.1836 18.4429 26.2662C15.6261 30.8388 9.66321 32.3661 4.98206 29.6634C0.383498 27.0072 -1.29755 21.2377 1.06565 16.5542C1.94237 17.7398 3.07137 18.7681 4.43001 19.5521C6.62125 20.8169 9.06477 21.2479 11.394 20.9436L18.6296 16.1141C18.711 16.2578 18.7891 16.4037 18.8637 16.5519C20.1986 19.2082 20.323 22.4142 18.9904 25.2549V25.2537Z" fill="#ffffff"/>
+  <path d="M29.6616 20.482C27.6559 23.955 23.8752 25.765 20.1273 25.4245C21.5505 22.1416 21.2586 18.4604 19.5527 15.4987L12.3205 10.6715C12.3488 10.6206 12.5049 10.3514 12.5558 10.2688C14.0423 7.85579 16.4044 6.29123 18.9927 5.74822C19.3671 5.66903 19.7472 5.61247 20.1296 5.5774C22.1093 5.39526 24.1637 5.80139 26.0167 6.87158C30.7815 9.62284 32.4139 15.7159 29.6627 20.482H29.6616Z" fill="#ffffff"/>
+</svg>
+<svg width="166" height="14" viewBox="0 0 166 14" fill="none">
+  <path d="M3.97578 10.9689L0 0.00113152H2.11989L5.19832 8.72893L8.26202 0.00113152H10.3819L6.39026 10.9689H3.97692H3.97578ZM11.0175 10.9689V2.71959H12.9981V10.9689H11.0175ZM10.9869 1.7614V0H13.0445V1.7614H10.9869ZM17.614 11.1544C16.9127 11.1544 16.3042 10.979 15.7887 10.6295C15.2834 10.2788 14.8913 9.77989 14.6126 9.13054C14.3339 8.48118 14.1945 7.71983 14.1945 6.84423C14.1945 5.96862 14.3339 5.20727 14.6126 4.55792C14.8913 3.90856 15.2879 3.40967 15.8034 3.05897C16.319 2.70828 16.9229 2.53406 17.614 2.53406C18.1918 2.53406 18.6972 2.65284 19.13 2.88928C19.5741 3.12572 19.9084 3.46058 20.1361 3.89386V0.00113152H22.1166V10.9689H20.229L20.1826 9.74822C19.956 10.1905 19.6149 10.5356 19.1617 10.7833C18.7074 11.03 18.1918 11.1544 17.614 11.1544ZM18.2168 9.54798C18.6292 9.54798 18.9748 9.44503 19.2535 9.23914C19.5424 9.03325 19.7588 8.72893 19.9038 8.32733C20.0579 7.91554 20.1361 7.42118 20.1361 6.84423C20.1361 6.26727 20.0591 5.76273 19.9038 5.36112C19.7588 4.95952 19.5424 4.65521 19.2535 4.44931C18.9748 4.24342 18.6292 4.14047 18.2168 4.14047C17.6185 4.14047 17.1393 4.38257 16.7778 4.86675C16.4277 5.34076 16.2521 5.99916 16.2521 6.84423C16.2521 7.68929 16.4277 8.32733 16.7778 8.8217C17.1393 9.30589 17.6185 9.54798 18.2168 9.54798ZM27.3592 11.1544C26.5343 11.1544 25.8171 10.979 25.2087 10.6295C24.6002 10.2686 24.1312 9.76405 23.8003 9.11583C23.4706 8.46648 23.3052 7.70965 23.3052 6.84536C23.3052 5.98106 23.4706 5.22876 23.8003 4.58959C24.13 3.94024 24.5946 3.43569 25.1928 3.07594C25.8012 2.71506 26.5083 2.53519 27.3127 2.53519C28.1171 2.53519 28.7822 2.71054 29.3703 3.0601C29.9685 3.4108 30.4274 3.91535 30.748 4.57375C31.0687 5.23216 31.2273 6.02631 31.2273 6.95283V7.40082H25.3639C25.4047 8.12144 25.6007 8.66784 25.9519 9.03777C26.3134 9.39865 26.7881 9.57852 27.375 9.57852C27.818 9.57852 28.1851 9.48123 28.4741 9.28552C28.7732 9.07963 28.9794 8.79681 29.0927 8.43593L31.1197 8.55924C30.8931 9.36245 30.4444 9.99596 29.7736 10.4598C29.1131 10.9236 28.3086 11.1544 27.3603 11.1544H27.3592ZM25.3628 6.07156H29.1845C29.1437 5.40185 28.9522 4.90748 28.6123 4.58846C28.2724 4.25926 27.8384 4.09409 27.3127 4.09409C26.787 4.09409 26.3485 4.26378 25.9973 4.6043C25.6562 4.94368 25.4455 5.43352 25.3628 6.07156ZM36.0166 11.1544C35.202 11.1544 34.4848 10.979 33.8661 10.6295C33.2577 10.2686 32.7829 9.76405 32.443 9.11583C32.1133 8.46648 31.9479 7.70965 31.9479 6.84536C31.9479 5.98106 32.1133 5.21292 32.443 4.57488C32.7841 3.92553 33.2577 3.42664 33.8661 3.07594C34.4848 2.71506 35.202 2.53519 36.0166 2.53519C36.8312 2.53519 37.5428 2.71506 38.1523 3.07594C38.7608 3.42664 39.2299 3.92553 39.5596 4.57488C39.9006 5.21292 40.0706 5.97088 40.0706 6.84536C40.0706 7.71984 39.9006 8.46761 39.5596 9.11583C39.2299 9.76518 38.7608 10.2697 38.1523 10.6295C37.5439 10.9802 36.8324 11.1544 36.0166 11.1544ZM36.0166 9.54798C36.6568 9.54798 37.1462 9.31154 37.4861 8.83754C37.8362 8.36353 38.0119 7.69947 38.0119 6.84423C38.0119 5.98898 37.8362 5.34076 37.4861 4.86675C37.1451 4.38257 36.6556 4.14047 36.0166 4.14047C35.3776 4.14047 34.8824 4.38257 34.5312 4.86675C34.1811 5.34076 34.0055 5.99916 34.0055 6.84423C34.0055 7.68929 34.1811 8.36353 34.5312 8.83754C34.8813 9.31154 35.3764 9.54798 36.0166 9.54798ZM44.8655 10.9689V0.00113152H48.5173C50.2701 0.00113152 51.6161 0.479661 52.5554 1.43785C53.5048 2.38586 53.9784 3.74 53.9784 5.50027C53.9784 7.26054 53.5139 8.59997 52.586 9.54798C51.658 10.496 50.3324 10.9689 48.6102 10.9689H44.8667H44.8655ZM46.8766 9.2233H48.5173C49.6616 9.2233 50.5125 8.91446 51.07 8.29679C51.6274 7.67911 51.905 6.74694 51.905 5.50027C51.905 4.2536 51.6263 3.29088 51.07 2.67321C50.5125 2.05553 49.6616 1.74669 48.5173 1.74669H46.8766V9.2233ZM59.1043 11.1544C58.2896 11.1544 57.5724 10.979 56.9538 10.6295C56.3453 10.2686 55.8706 9.76405 55.5307 9.11583C55.201 8.46648 55.0356 7.70965 55.0356 6.84536C55.0356 5.98106 55.201 5.21292 55.5307 4.57488C55.8717 3.92553 56.3453 3.42664 56.9538 3.07594C57.5724 2.71506 58.2896 2.53519 59.1043 2.53519C59.9189 2.53519 60.6304 2.71506 61.2389 3.07594C61.8473 3.42664 62.3164 3.92553 62.6472 4.57488C62.9883 5.21292 63.1582 5.97088 63.1582 6.84536C63.1582 7.71984 62.9883 8.46761 62.6472 9.11583C62.3175 9.76518 61.8473 10.2697 61.2389 10.6295C60.6304 10.9802 59.9189 11.1544 59.1043 11.1544ZM59.1043 9.54798C59.7433 9.54798 60.2339 9.31154 60.5738 8.83754C60.9239 8.36353 61.0995 7.69947 61.0995 6.84423C61.0995 5.98898 60.9239 5.34076 60.5738 4.86675C60.2327 4.38257 59.7433 4.14047 59.1043 4.14047C58.4652 4.14047 57.9701 4.38257 57.6189 4.86675C57.2676 5.34076 57.0931 5.99916 57.0931 6.84423C57.0931 7.68929 57.2687 8.36353 57.6189 8.83754C57.969 9.31154 58.4641 9.54798 59.1043 9.54798ZM65.7834 10.9689L63.2919 2.71959H65.3189L66.9278 8.72893L68.5831 2.71959H70.3155L71.9867 8.72893L73.5956 2.71959H75.6226L73.1311 10.9689H71.0882L69.4488 5.43805L67.824 10.9689H65.7823H65.7834ZM76.3353 10.9689V2.71959H78.13L78.2071 5.03645L77.9748 4.94368C78.0575 4.36673 78.2274 3.90404 78.4858 3.55334C78.7441 3.20265 79.058 2.94585 79.4296 2.78068C79.8012 2.61551 80.208 2.53406 80.6521 2.53406C81.2606 2.53406 81.7716 2.66755 82.184 2.93566C82.6066 3.20378 82.9261 3.5737 83.1436 4.04771C83.36 4.51153 83.4688 5.05228 83.4688 5.66996V10.9689H81.4883V6.30348C81.4883 5.83965 81.4418 5.44823 81.3489 5.12921C81.256 4.81019 81.1019 4.5681 80.8844 4.40293C80.6782 4.22758 80.3994 4.14047 80.0493 4.14047C79.5236 4.14047 79.0999 4.326 78.7804 4.69706C78.471 5.06812 78.3158 5.60321 78.3158 6.30348V10.9689H76.3353ZM87.1081 10.9689C86.5099 10.9689 86.0306 10.8139 85.6692 10.505C85.3077 10.1962 85.1276 9.70183 85.1276 9.02193V0H87.1081V8.82057C87.1081 9.02646 87.1591 9.18145 87.2633 9.28439C87.3766 9.38734 87.5307 9.43938 87.7279 9.43938H88.3318V10.9689H87.1092H87.1081ZM92.8423 11.1544C92.0277 11.1544 91.3105 10.979 90.6919 10.6295C90.0834 10.2686 89.6087 9.76405 89.2688 9.11583C88.9391 8.46648 88.7736 7.70965 88.7736 6.84536C88.7736 5.98106 88.9391 5.21292 89.2688 4.57488C89.6087 3.92553 90.0834 3.42664 90.6919 3.07594C91.3105 2.71506 92.0277 2.53519 92.8423 2.53519C93.657 2.53519 94.3685 2.71506 94.9769 3.07594C95.5854 3.42664 96.0545 3.92553 96.3853 4.57488C96.7252 5.21292 96.8963 5.97088 96.8963 6.84536C96.8963 7.71984 96.7263 8.46761 96.3853 9.11583C96.0556 9.76518 95.5854 10.2697 94.9769 10.6295C94.3685 10.9802 93.657 11.1544 92.8423 11.1544ZM92.8423 9.54798C93.4814 9.54798 93.972 9.31154 94.3119 8.83754C94.6631 8.36353 94.8376 7.69947 94.8376 6.84423C94.8376 5.98898 94.662 5.34076 94.3119 4.86675C93.972 4.38257 93.4814 4.14047 92.8423 4.14047C92.2033 4.14047 91.7082 4.38257 91.3569 4.86675C91.0057 5.34076 90.8312 5.99916 90.8312 6.84423C90.8312 7.68929 91.0068 8.36353 91.3569 8.83754C91.707 9.31154 92.2022 9.54798 92.8423 9.54798ZM100.596 11.1544C99.7289 11.1544 99.0332 10.9587 98.5063 10.5673C97.9806 10.1657 97.7177 9.60907 97.7177 8.89863C97.7177 8.18818 97.9398 7.63159 98.3828 7.22999C98.8258 6.82839 99.5023 6.53991 100.41 6.36456L103.148 5.82381C103.148 5.23668 103.015 4.79888 102.746 4.5104C102.479 4.21174 102.081 4.06242 101.555 4.06242C101.081 4.06242 100.704 4.17554 100.426 4.4018C100.157 4.61787 99.9713 4.93237 99.8682 5.34415L97.8571 5.25139C98.0225 4.37578 98.4248 3.70606 99.0638 3.24337C99.7028 2.76937 100.533 2.53293 101.554 2.53293C102.73 2.53293 103.617 2.83159 104.216 3.4289C104.824 4.01603 105.129 4.85997 105.129 5.96183V8.95858C105.129 9.17466 105.165 9.32399 105.238 9.40657C105.32 9.48915 105.438 9.52988 105.593 9.52988H105.856V10.9666C105.794 10.987 105.691 11.0028 105.547 11.013C105.413 11.0232 105.273 11.0288 105.129 11.0288C104.788 11.0288 104.484 10.9768 104.216 10.8738C103.947 10.7607 103.741 10.5695 103.597 10.3025C103.452 10.0242 103.381 9.64866 103.381 9.17466L103.551 9.29797C103.468 9.65884 103.288 9.98239 103.009 10.2709C102.74 10.5492 102.401 10.7652 101.988 10.9202C101.576 11.0752 101.111 11.1521 100.596 11.1521V11.1544ZM100.998 9.71767C101.441 9.71767 101.823 9.63056 102.143 9.45521C102.463 9.27987 102.71 9.03777 102.885 8.72893C103.061 8.42009 103.148 8.05469 103.148 7.6316V7.16777L101.013 7.59992C100.57 7.69268 100.25 7.83183 100.054 8.01736C99.8682 8.19271 99.7753 8.42462 99.7753 8.7131C99.7753 9.03212 99.8784 9.27987 100.085 9.45408C100.301 9.62943 100.606 9.71654 100.998 9.71654V9.71767ZM109.644 11.1544C108.943 11.1544 108.334 10.979 107.819 10.6295C107.313 10.2788 106.921 9.77989 106.643 9.13054C106.364 8.48118 106.226 7.71983 106.226 6.84423C106.226 5.96862 106.365 5.20727 106.643 4.55792C106.921 3.90856 107.318 3.40967 107.835 3.05897C108.35 2.70828 108.954 2.53406 109.645 2.53406C110.223 2.53406 110.728 2.65284 111.161 2.88928C111.605 3.12572 111.939 3.46058 112.167 3.89386V0.00113152H114.148V10.9689H112.26L112.214 9.74822C111.987 10.1905 111.646 10.5356 111.193 10.7833C110.738 11.03 110.223 11.1544 109.645 11.1544H109.644ZM110.248 9.54798C110.66 9.54798 111.006 9.44503 111.285 9.23914C111.574 9.03325 111.79 8.72893 111.935 8.32733C112.089 7.91554 112.167 7.42118 112.167 6.84423C112.167 6.26727 112.09 5.76273 111.935 5.36112C111.79 4.95952 111.574 4.65521 111.285 4.44931C111.006 4.24342 110.66 4.14047 110.248 4.14047C109.65 4.14047 109.169 4.38257 108.809 4.86675C108.459 5.34076 108.283 5.99916 108.283 6.84423C108.283 7.68929 108.459 8.32733 108.809 8.8217C109.17 9.30589 109.65 9.54798 110.248 9.54798ZM119.43 10.9689V0.00113152H121.441V5.23781L120.513 4.57375H126.98L126.067 5.23781V0.00113152H128.078V10.9689H126.067V5.66996L126.98 6.31931H120.513L121.441 5.66996V10.9689H119.43ZM133.47 11.1544C132.646 11.1544 131.928 10.979 131.32 10.6295C130.711 10.2686 130.242 9.76405 129.912 9.11583C129.582 8.46648 129.416 7.70965 129.416 6.84536C129.416 5.98106 129.582 5.22876 129.912 4.58959C130.241 3.94024 130.706 3.43569 131.304 3.07594C131.912 2.71506 132.619 2.53519 133.424 2.53519C134.228 2.53519 134.893 2.71054 135.481 3.0601C136.08 3.4108 136.539 3.91535 136.859 4.57375C137.179 5.23329 137.338 6.02631 137.338 6.95283V7.40082H131.475C131.516 8.12144 131.712 8.66784 132.063 9.03777C132.425 9.39865 132.899 9.57852 133.486 9.57852C133.929 9.57852 134.296 9.48123 134.585 9.28552C134.884 9.07963 135.091 8.79681 135.204 8.43593L137.231 8.55924C137.004 9.36245 136.556 9.99596 135.885 10.4598C135.224 10.9236 134.42 11.1544 133.471 11.1544H133.47ZM131.475 6.07156H135.297C135.256 5.40185 135.065 4.90748 134.725 4.58846C134.385 4.25926 133.951 4.09409 133.425 4.09409C132.899 4.09409 132.461 4.26378 132.11 4.6043C131.769 4.94368 131.558 5.43352 131.475 6.07156ZM140.595 10.9689C139.997 10.9689 139.517 10.8139 139.156 10.505C138.794 10.1962 138.614 9.70183 138.614 9.02193V0H140.595V8.82057C140.595 9.02646 140.646 9.18145 140.749 9.28439C140.862 9.38734 141.017 9.43938 141.213 9.43938H141.817V10.9689H140.595ZM142.83 13.2857V2.71959H144.734L144.78 4.48099L144.579 4.38822C144.785 3.78073 145.12 3.32256 145.585 3.01372C146.059 2.6947 146.611 2.53519 147.24 2.53519C148.024 2.53519 148.673 2.7309 149.19 3.12232C149.716 3.51375 150.108 4.03413 150.366 4.68236C150.624 5.33171 150.752 6.05233 150.752 6.84536C150.752 7.63838 150.619 8.35901 150.35 9.00836C150.092 9.65771 149.7 10.177 149.174 10.5684C148.659 10.9598 148.008 11.1555 147.224 11.1555C146.812 11.1555 146.425 11.0831 146.064 10.9395C145.714 10.7958 145.409 10.5888 145.152 10.3218C144.905 10.0537 144.729 9.7403 144.626 9.37942L144.812 9.22443V13.2868H142.831L142.83 13.2857ZM146.76 9.54798C147.358 9.54798 147.827 9.31154 148.167 8.83754C148.518 8.35335 148.693 7.68929 148.693 6.84423C148.693 5.99916 148.517 5.34076 148.167 4.86675C147.827 4.38257 147.358 4.14047 146.76 4.14047C146.357 4.14047 146.012 4.24342 145.723 4.44931C145.434 4.64502 145.207 4.94368 145.042 5.34528C144.887 5.74689 144.81 6.24691 144.81 6.84423C144.81 7.44154 144.887 7.94156 145.042 8.34317C145.196 8.74477 145.418 9.04909 145.707 9.25498C146.006 9.45069 146.356 9.54798 146.76 9.54798ZM155.514 11.1544C154.69 11.1544 153.972 10.979 153.364 10.6295C152.756 10.2686 152.286 9.76405 151.957 9.11583C151.627 8.46648 151.462 7.70965 151.462 6.84536C151.462 5.98106 151.627 5.22876 151.957 4.58959C152.286 3.94024 152.751 3.43569 153.349 3.07594C153.958 2.71506 154.665 2.53519 155.469 2.53519C156.274 2.53519 156.939 2.71054 157.527 3.0601C158.125 3.4108 158.584 3.91535 158.903 4.57375C159.223 5.23216 159.383 6.02631 159.383 6.95283V7.40082H153.519C153.56 8.12144 153.756 8.66784 154.107 9.03777C154.469 9.39865 154.943 9.57852 155.53 9.57852C155.973 9.57852 156.34 9.48123 156.629 9.28552C156.928 9.07963 157.135 8.79681 157.248 8.43593L159.275 8.55924C159.048 9.36245 158.6 9.99596 157.929 10.4598C157.268 10.9236 156.464 11.1544 155.516 11.1544H155.514ZM153.519 6.07156H157.341C157.299 5.40185 157.109 4.90748 156.769 4.58846C156.429 4.25926 155.995 4.09409 155.469 4.09409C154.943 4.09409 154.505 4.26378 154.154 4.6043C153.814 4.94368 153.602 5.43352 153.519 6.07156ZM160.584 10.9689V2.71959H162.441L162.518 5.0059L162.348 4.97536C162.471 4.18233 162.704 3.61104 163.043 3.26034C163.394 2.89946 163.868 2.71959 164.467 2.71959H165.225V4.41877H164.451C164.028 4.41877 163.677 4.48099 163.398 4.6043C163.119 4.72761 162.907 4.92332 162.764 5.19143C162.63 5.44936 162.562 5.78874 162.562 6.21071V10.9689H160.581H160.584Z" fill="#ffffff"/>
+</svg>
+      </hbox>
+      <p class="footer-tagline">The most trusted video download extension for Chrome, Firefox, and Edge.</p>
+      <a class="btn-secondary btn-donate" href="https://payments.downloadhelper.net/b/fZu7sN0nM2aLdDY2eCa3u0e">Donate</a>
+    </vbox>
+    <spacer flex="1" class="footer-spacer"></spacer>
+    <hbox class="footer-links">
+      <vbox class="footer-col">
+        <h5 class="footer-col-title t-h5">Product</h5>
+        <vbox class="footer-list">
+          <a href="/premium">Premium</a>
+          <a href="https://help.downloadhelper.net/#contact">Support</a>
+          <a href="/rapid">Rapid Release</a>
+        </vbox>
+      </vbox>
+      <vbox class="footer-col">
+        <h5 class="footer-col-title t-h5">Support</h5>
+        <vbox class="footer-list">
+          <a href="https://help.downloadhelper.net/">Documentation</a>
+          <a href="https://help.downloadhelper.net/#contact">Contact</a>
+          <a href="/privacy">Privacy policy</a>
+        </vbox>
+      </vbox>
+      <vbox class="footer-col">
+        <h5 class="footer-col-title t-h5">Download</h5>
+        <vbox class="footer-list">
+          <a class="footer-dl-item hbox" href="https://chromewebstore.google.com/detail/video-downloadhelper/lmjnegcaeklhafolokijcfjliaokphfk" xalign="center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12.0004 1.50284C12.0004 1.50284 18.1895 1.22609 21.4708 7.42489H11.4737C11.4737 7.42489 9.5871 7.3643 7.97548 9.64493C7.51252 10.6022 7.0149 11.5882 7.57333 13.5315C6.76888 12.1735 3.30249 6.15923 3.30249 6.15923C3.30249 6.15923 5.74749 1.7479 12.0003 1.50284H12.0004Z" fill="#EF3F36"/>
+  <path d="M21.1495 17.2391C21.1495 17.2391 18.2936 22.72 11.2683 22.449C12.1364 20.9526 16.2682 13.8225 16.2682 13.8225C16.2682 13.8225 17.2665 12.2253 16.0888 9.69386C15.4898 8.81449 14.8793 7.89476 12.9118 7.40456C14.4946 7.39023 21.4534 7.40456 21.4534 7.40456C21.4534 7.40456 24.0604 11.7207 21.1495 17.2391Z" fill="#FCD900"/>
+  <path d="M2.89448 17.2824C2.89448 17.2824 -0.441744 12.0782 3.30821 6.15039C4.17339 7.64679 8.30528 14.7769 8.30528 14.7769C8.30528 14.7769 9.19651 16.4376 11.9829 16.6855C13.0449 16.6077 14.1502 16.5414 15.5623 15.0911C14.7838 16.4636 11.2913 22.4606 11.2913 22.4606C11.2913 22.4606 6.2335 22.5528 2.8944 17.2824H2.89448Z" fill="#61BC5B"/>
+  <path d="M11.2656 22.501L12.6718 16.6539C12.6718 16.6539 14.217 16.5328 15.5134 15.1172C14.7089 16.5271 11.2656 22.501 11.2656 22.501V22.501Z" fill="#5AB055"/>
+  <path d="M7.28979 12.0667C7.28979 9.48924 9.38762 7.39893 11.9744 7.39893C14.5611 7.39893 16.6589 9.48924 16.6589 12.0667C16.6589 14.6443 14.5611 16.7345 11.9744 16.7345C9.38762 16.7317 7.28979 14.6443 7.28979 12.0667Z" fill="white"/>
+  <path d="M8.07397 12.0667C8.07397 9.92164 9.81881 8.18018 11.9745 8.18018C14.1272 8.18018 15.8749 9.91878 15.8749 12.0667C15.8749 14.2118 14.1302 15.9533 11.9745 15.9533C9.82168 15.9533 8.07397 14.2118 8.07397 12.0667Z" fill="url(#cg)"/>
+  <path d="M21.4505 7.40767L15.6606 9.1001C15.6606 9.1001 14.7868 7.82279 12.9089 7.40767C14.538 7.39899 21.4505 7.40767 21.4505 7.40767Z" fill="#EACA05"/>
+  <path d="M7.46051 13.3182C6.64734 11.914 3.30249 6.15918 3.30249 6.15918L7.59067 10.3859C7.59067 10.3859 7.15081 11.2884 7.31581 12.58L7.46043 13.3182H7.46051Z" fill="#DF3A32"/>
+  <defs>
+    <linearGradient id="cg" x1="11.97" y1="8.23" x2="11.97" y2="15.72" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#86BBE5"/>
+      <stop offset="1" stop-color="#1072BA"/>
+    </linearGradient>
+  </defs>
+</svg>
+            <span>on Chrome</span>
+          </a>
+          <a class="footer-dl-item hbox" href="https://addons.mozilla.org/en-US/firefox/addon/video-downloadhelper" xalign="center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M21.7429 8.04486C21.2862 6.94305 20.3605 5.75354 19.6338 5.37779C20.2253 6.54011 20.5674 7.70594 20.6982 8.57582C20.6982 8.57582 20.6982 8.58196 20.7004 8.59336C19.5117 5.62332 17.4958 4.42549 15.8495 1.81805C15.766 1.68652 15.6829 1.55498 15.6015 1.41424C15.5555 1.33488 15.5184 1.26298 15.486 1.19502C15.4178 1.06318 15.3651 0.923844 15.3289 0.779812L15.2773 0.752629C12.6362 2.30297 11.7402 5.17085 11.658 6.60588C10.6026 6.67821 9.59346 7.06769 8.76227 7.72348C8.67539 7.64986 8.58455 7.58106 8.49015 7.51741C8.25061 6.67703 8.24049 5.78762 8.46084 4.94198C7.38069 5.43523 6.54071 6.21347 5.92998 6.90227H5.92517C5.50825 6.37307 5.53756 4.62761 5.56118 4.26327C5.55637 4.24047 5.25057 4.42242 5.21119 4.45004C4.8433 4.71307 4.4994 5.00828 4.18354 5.3322C3.8241 5.69741 3.49572 6.09207 3.20182 6.51205C2.52564 7.47242 2.0461 8.55759 1.79093 9.70482C1.78612 9.72762 1.78174 9.75129 1.77693 9.77453C1.75724 9.86704 1.68593 10.3314 1.67324 10.4322V10.4554C1.58028 10.9352 1.52238 11.4211 1.5 11.9093V11.9633C1.5 17.7823 6.20735 22.5 12.0137 22.5C17.2141 22.5 21.5316 18.7162 22.3773 13.746C22.3948 13.6114 22.4092 13.4755 22.4249 13.3395C22.6341 11.5323 22.4018 9.63291 21.7429 8.04486Z" fill="url(#ff_a0)"/>
+  <path d="M21.7428 8.04475C21.2861 6.94294 20.3604 5.75343 19.6337 5.37769C20.2252 6.54001 20.5673 7.70583 20.6981 8.57571V8.59719C21.6903 11.2928 21.1496 14.0339 20.3709 15.7088C19.166 18.3 16.2493 20.9561 11.6833 20.8268C6.75411 20.6865 2.40857 17.0162 1.59703 12.2131C1.44916 11.455 1.59703 11.0705 1.6714 10.4553C1.58084 10.9293 1.54628 11.0665 1.50122 11.9092V11.9631C1.50122 17.7822 6.20857 22.4999 12.0149 22.4999C17.2153 22.4999 21.5328 18.7161 22.3785 13.7459C22.396 13.6113 22.4104 13.4753 22.4262 13.3394C22.634 11.5322 22.4017 9.6328 21.7428 8.04475Z" fill="url(#ff_a1)"/>
+  <path d="M21.7428 8.04475C21.2861 6.94294 20.3604 5.75343 19.6337 5.37769C20.2252 6.54001 20.5673 7.70583 20.6981 8.57571V8.59719C21.6903 11.2928 21.1496 14.0339 20.3709 15.7088C19.166 18.3 16.2493 20.9561 11.6833 20.8268C6.75411 20.6865 2.40857 17.0162 1.59703 12.2131C1.44916 11.455 1.59703 11.0705 1.6714 10.4553C1.58084 10.9293 1.54628 11.0665 1.50122 11.9092V11.9631C1.50122 17.7822 6.20857 22.4999 12.0149 22.4999C17.2153 22.4999 21.5328 18.7161 22.3785 13.7459C22.396 13.6113 22.4104 13.4753 22.4262 13.3394C22.634 11.5322 22.4017 9.6328 21.7428 8.04475Z" fill="url(#ff_a2)"/>
+  <path d="M16.6334 9.28309C16.6566 9.29931 16.6772 9.31553 16.6991 9.33176C16.4352 8.86221 16.1065 8.43237 15.7226 8.055C12.4546 4.77981 14.866 0.953055 15.2724 0.758385L15.2768 0.752686C12.6357 2.30303 11.7397 5.17091 11.6575 6.60594C11.78 6.59761 11.902 6.58709 12.0267 6.58709C13.9976 6.58709 15.7143 7.67355 16.6334 9.28309Z" fill="url(#ff_a3)"/>
+  <path d="M12.0335 9.93717C12.0164 10.2002 11.0924 11.1034 10.7691 11.1034C7.77936 11.1034 7.29419 12.916 7.29419 12.916C7.42544 14.4426 8.48678 15.6997 9.7708 16.3648C9.82942 16.395 9.88848 16.4222 9.94579 16.4494C10.0486 16.4933 10.1518 16.5371 10.2547 16.5761C10.695 16.7318 11.1561 16.8204 11.6227 16.8392C16.8629 17.0856 17.8787 10.5598 14.0967 8.6648C15.0648 8.496 16.0702 8.88666 16.6315 9.2817C15.7127 7.67216 13.9956 6.58569 12.0247 6.58569C11.9 6.58569 11.778 6.59622 11.6555 6.60455C10.6009 6.67777 9.5927 7.06768 8.76239 7.72346C8.92295 7.85982 9.10407 8.04133 9.48512 8.41752C10.2 9.12429 12.0295 9.85168 12.0335 9.93717Z" fill="url(#ff_a4)"/>
+  <path d="M12.0335 9.93717C12.0164 10.2002 11.0924 11.1034 10.7691 11.1034C7.77936 11.1034 7.29419 12.916 7.29419 12.916C7.42544 14.4426 8.48678 15.6997 9.7708 16.3648C9.82942 16.395 9.88848 16.4222 9.94579 16.4494C10.0486 16.4933 10.1518 16.5371 10.2547 16.5761C10.695 16.7318 11.1561 16.8204 11.6227 16.8392C16.8629 17.0856 17.8787 10.5598 14.0967 8.6648C15.0648 8.496 16.0702 8.88666 16.6315 9.2817C15.7127 7.67216 13.9956 6.58569 12.0247 6.58569C11.9 6.58569 11.778 6.59622 11.6555 6.60455C10.6009 6.67777 9.5927 7.06768 8.76239 7.72346C8.92295 7.85982 9.10407 8.04133 9.48512 8.41752C10.2 9.12429 12.0295 9.85168 12.0335 9.93717Z" fill="url(#ff_a5)"/>
+  <path d="M8.27355 7.37332C8.35886 7.42857 8.42886 7.47504 8.4923 7.51757C8.25276 6.67719 8.24264 5.78778 8.46298 4.94214C7.38283 5.43539 6.54286 6.21363 5.93213 6.90243C5.98156 6.90112 7.50664 6.87349 8.27355 7.37332Z" fill="url(#ff_a6)"/>
+  <path d="M1.59728 12.2132C2.40881 17.0163 6.75436 20.6866 11.687 20.8269C16.2531 20.9562 19.168 18.3001 20.3746 15.7089C21.1533 14.0336 21.6941 11.2929 20.7018 8.59729V8.57713C20.7018 8.57976 20.7018 8.58326 20.704 8.59466C21.0768 11.0355 19.8382 13.4 17.9019 14.999C17.8999 15.0035 17.898 15.0081 17.8962 15.0126C14.1229 18.0918 10.5124 16.8703 9.78132 16.3718C9.73058 16.3473 9.67939 16.3218 9.62864 16.2955C7.42853 15.2433 6.51987 13.233 6.71455 11.5103C4.85742 11.5103 4.22394 9.93982 4.22394 9.93982C4.22394 9.93982 5.89164 8.74812 8.08957 9.78461C10.1252 10.7448 12.037 9.94025 12.037 9.93982C12.0331 9.85432 10.2035 9.12474 9.48996 8.42016C9.10891 8.04398 8.92779 7.86246 8.76723 7.7261C8.68036 7.65248 8.58951 7.58368 8.49512 7.52003C8.43256 7.47619 8.36387 7.43234 8.27637 7.37578C7.50946 6.87595 5.98438 6.90358 5.93407 6.90489H5.92926C5.51234 6.37569 5.54165 4.63024 5.56527 4.26589C5.56046 4.24309 5.25466 4.42504 5.21528 4.45266C4.84739 4.7157 4.50349 5.0109 4.18763 5.33482C3.82819 5.70003 3.49981 6.09469 3.20591 6.51468C2.52973 7.47505 2.0502 8.56021 1.79502 9.70744C1.78671 9.72761 1.41266 11.3643 1.59728 12.2132Z" fill="url(#ff_a7)"/>
+  <path d="M15.7225 8.05495C16.1064 8.43232 16.4351 8.86215 16.699 9.3317C16.7537 9.37286 16.8063 9.41676 16.8565 9.46323C19.2399 11.6625 17.9931 14.7759 17.8982 14.9995C19.8345 13.4005 21.073 11.0359 20.7003 8.59511C19.5116 5.62332 17.4957 4.42549 15.8494 1.81805C15.7659 1.68652 15.6827 1.55498 15.6014 1.41424C15.5554 1.33488 15.5182 1.26298 15.4859 1.19502C15.4176 1.06318 15.3649 0.923844 15.3288 0.779812C14.8659 0.952998 12.4545 4.77975 15.7225 8.05495Z" fill="url(#ff_a8)"/>
+  <path d="M16.8557 9.46096C16.8055 9.41448 16.7529 9.37058 16.6982 9.32942C16.6768 9.3132 16.6545 9.29698 16.6326 9.28076C16.0713 8.88616 15.066 8.49506 14.0978 8.66386C17.8795 10.5588 16.864 17.0847 11.6238 16.8382C11.1573 16.8195 10.6962 16.7308 10.2558 16.5752C10.153 16.5366 10.0498 16.4941 9.94697 16.4485C9.88747 16.4213 9.82841 16.3941 9.77197 16.3638L9.77897 16.3682C10.51 16.8681 14.1206 18.0896 17.8939 15.0091C17.9932 14.7758 19.24 11.6624 16.8557 9.46096Z" fill="url(#ff_a9)"/>
+  <path d="M7.29399 12.916C7.29399 12.916 7.77916 11.1035 10.7689 11.1035C11.0922 11.1035 12.0162 10.1994 12.0333 9.93721C12.0503 9.67502 10.1215 10.7422 8.08584 9.782C5.88791 8.74551 4.22021 9.93721 4.22021 9.93721C4.22021 9.93721 4.85369 11.5077 6.71082 11.5077C6.51614 13.2304 7.4248 15.2389 9.62492 16.2929C9.67391 16.3162 9.72029 16.342 9.7706 16.3648C8.48658 15.701 7.42655 14.4427 7.29399 12.916Z" fill="url(#ff_a10)"/>
+  <defs>
+    <linearGradient id="ff_a0" x1="20.3513" y1="4.11945" x2="2.86044" y2="20.9578" gradientUnits="userSpaceOnUse">
+      <stop offset="0.05" stop-color="#FFF44F"/><stop offset="0.11" stop-color="#FFE847"/><stop offset="0.22" stop-color="#FFC830"/><stop offset="0.37" stop-color="#FF980E"/><stop offset="0.4" stop-color="#FF8B16"/><stop offset="0.46" stop-color="#FF672A"/><stop offset="0.53" stop-color="#FF3647"/><stop offset="0.7" stop-color="#E31587"/>
+    </linearGradient>
+    <radialGradient id="ff_a1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(19.5445 3.16397) scale(21.9185 21.9666)">
+      <stop offset="0.13" stop-color="#FFBD4F"/><stop offset="0.19" stop-color="#FFAC31"/><stop offset="0.25" stop-color="#FF9D17"/><stop offset="0.28" stop-color="#FF980E"/><stop offset="0.4" stop-color="#FF563B"/><stop offset="0.47" stop-color="#FF3750"/><stop offset="0.71" stop-color="#F5156C"/><stop offset="0.78" stop-color="#EB0878"/><stop offset="0.86" stop-color="#E50080"/>
+    </radialGradient>
+    <radialGradient id="ff_a2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.5354 12.1442) scale(21.9185 21.9666)">
+      <stop offset="0.3" stop-color="#960E18"/><stop offset="0.35" stop-color="#B11927" stop-opacity="0.74"/><stop offset="0.43" stop-color="#DB293D" stop-opacity="0.34"/><stop offset="0.5" stop-color="#F5334B" stop-opacity="0.09"/><stop offset="0.53" stop-color="#FF3750" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ff_a3" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(14.1783 -1.82099) scale(15.879 15.9138)">
+      <stop offset="0.13" stop-color="#FFF44F"/><stop offset="0.25" stop-color="#FFDC3E"/><stop offset="0.51" stop-color="#FF9D12"/><stop offset="0.53" stop-color="#FF980E"/>
+    </radialGradient>
+    <radialGradient id="ff_a4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9.11151 17.8822) scale(10.4362 10.4591)">
+      <stop offset="0.35" stop-color="#3A8EE6"/><stop offset="0.47" stop-color="#5C79F0"/><stop offset="0.67" stop-color="#9059FF"/><stop offset="1" stop-color="#C139E6"/>
+    </radialGradient>
+    <radialGradient id="ff_a5" cx="0" cy="0" r="1" gradientTransform="matrix(5.36732 -1.33091 1.54933 6.32183 11.8504 9.53365)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.21" stop-color="#9059FF" stop-opacity="0"/><stop offset="0.28" stop-color="#8C4FF3" stop-opacity="0.06"/><stop offset="0.75" stop-color="#7716A8" stop-opacity="0.45"/><stop offset="0.97" stop-color="#6E008B" stop-opacity="0.6"/>
+    </radialGradient>
+    <radialGradient id="ff_a6" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.2585 2.26543) scale(7.50813 7.52461)">
+      <stop stop-color="#FFE226"/><stop offset="0.12" stop-color="#FFDB27"/><stop offset="0.3" stop-color="#FFC82A"/><stop offset="0.5" stop-color="#FFA930"/><stop offset="0.73" stop-color="#FF7E37"/><stop offset="0.79" stop-color="#FF7139"/>
+    </radialGradient>
+    <radialGradient id="ff_a7" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(17.1604 -2.50722) scale(32.0332 32.1034)">
+      <stop offset="0.11" stop-color="#FFF44F"/><stop offset="0.46" stop-color="#FF980E"/><stop offset="0.62" stop-color="#FF5634"/><stop offset="0.72" stop-color="#FF3647"/><stop offset="0.9" stop-color="#E31587"/>
+    </radialGradient>
+    <radialGradient id="ff_a8" cx="0" cy="0" r="1" gradientTransform="matrix(2.34654 23.2818 -15.2525 1.64618 14.0637 1.00031)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF44F"/><stop offset="0.06" stop-color="#FFE847"/><stop offset="0.17" stop-color="#FFC830"/><stop offset="0.3" stop-color="#FF980E"/><stop offset="0.36" stop-color="#FF8B16"/><stop offset="0.45" stop-color="#FF672A"/><stop offset="0.57" stop-color="#FF3647"/><stop offset="0.74" stop-color="#E31587"/>
+    </radialGradient>
+    <radialGradient id="ff_a9" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.0818 5.05195) scale(19.9983 20.0422)">
+      <stop offset="0.14" stop-color="#FFF44F"/><stop offset="0.48" stop-color="#FF980E"/><stop offset="0.59" stop-color="#FF5634"/><stop offset="0.66" stop-color="#FF3647"/><stop offset="0.9" stop-color="#E31587"/>
+    </radialGradient>
+    <radialGradient id="ff_a10" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(16.3609 6.22532) scale(21.8883 21.9363)">
+      <stop offset="0.09" stop-color="#FFF44F"/><stop offset="0.23" stop-color="#FFE141"/><stop offset="0.51" stop-color="#FFAF1E"/><stop offset="0.63" stop-color="#FF980E"/>
+    </radialGradient>
+  </defs>
+</svg>
+            <span>on Firefox</span>
+          </a>
+          <a class="footer-dl-item hbox" href="https://microsoftedge.microsoft.com/addons/detail/video-downloadhelper/jmkaglaafmhbcpleggkmaliipiilhldn" xalign="center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M14.6938 11.9045C14.6938 9.9 12.6106 6.43977 7.91733 6.43977C3.22406 6.43977 1.5 10.3534 1.5 12.0239C1.5 6.05795 6.36089 1.5 12.1317 1.5C17.9025 1.5 22.5 5.81932 22.5 10.2102C22.5 14.1239 19.5547 15.4841 17.1602 15.4841C15.5798 15.4841 13.7839 14.9591 13.7839 14.1239C13.7839 13.4795 14.6938 13.4795 14.6938 11.9045Z" fill="url(#eg1)"/>
+  <path d="M7.91733 6.4397C12.6106 6.4397 14.6938 9.89992 14.6938 11.9045C14.6699 10.6158 13.7686 9.35106 11.988 9.35106C9.73717 9.35106 6.69613 12.4056 7.10319 16.1999C7.42904 19.2372 10.0006 23.3113 15.5798 21.8795C15.5798 21.8795 14.5262 22.4999 11.581 22.4999C6.36089 22.4999 1.5 17.7272 1.5 12.2624C1.5 12.1177 1.50221 11.9757 1.50666 11.8364C1.62701 10.0786 3.39177 6.4397 7.91733 6.4397Z" fill="url(#eg2)"/>
+  <path d="M14.9298 22.1247C17.919 21.3092 20.0545 18.7654 20.4406 18.2522C20.8717 17.6795 20.9914 17.3215 20.8717 17.2022C20.7519 17.0829 20.5843 17.1068 20.1533 17.3215C19.7223 17.5363 17.1841 18.5863 14.2867 17.7033C11.3893 16.8204 9.40188 14.5295 9.40188 11.9999C9.40188 10.0431 11.078 9.35108 11.988 9.35107C9.73711 9.35107 6.69606 12.4056 7.10313 16.1999C7.42897 19.2372 10.0005 23.3113 15.5798 21.8795C15.5798 21.8795 15.3853 21.994 14.9298 22.1247Z" fill="#0E458A"/>
+  <defs>
+    <linearGradient id="eg1" x1="21.28" y1="13.91" x2="0.74" y2="9.06" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3BCC50"/>
+      <stop offset="0.49" stop-color="#2ABAD6"/>
+      <stop offset="1" stop-color="#7DCFE7"/>
+    </linearGradient>
+    <linearGradient id="eg2" x1="8.54" y1="6.44" x2="8.54" y2="22.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#035989"/>
+      <stop offset="0.27" stop-color="#1175B6"/>
+      <stop offset="1" stop-color="#0470CF"/>
+    </linearGradient>
+  </defs>
+</svg>
+            <span>on Microsoft Edge</span>
+          </a>
+        </vbox>
+      </vbox>
+    </hbox>
+  </hbox>
+  <hbox class="footer-bottom" xalign="end" pack="start">
+    <p class="footer-copyright">© 2026 Video Download Helper. All rights reserved.</p>
+    <spacer flex="1"></spacer>
+    
+    <button type="button" class="lang-trigger" onclick="document.getElementById('lang-modal').showModal()">
+      <span>English</span>
+      <svg viewBox="0 0 24 24" fill="none">
+  <path d="M12 22C13.9778 22 15.9112 21.4135 17.5557 20.3147C19.2002 19.2159 20.4819 17.6541 21.2388 15.8268C21.9957 13.9996 22.1937 11.9889 21.8078 10.0491C21.422 8.10929 20.4696 6.32746 19.0711 4.92893C17.6725 3.53041 15.8907 2.578 13.9509 2.19215C12.0111 1.8063 10.0004 2.00433 8.17316 2.76121C6.3459 3.51808 4.78412 4.79981 3.6853 6.4443C2.58649 8.08879 2 10.0222 2 12C2.00291 14.6513 3.05742 17.1931 4.93215 19.0679C6.80688 20.9426 9.34873 21.9971 12 22ZM12 2.8C13.8196 2.8 15.5983 3.33957 17.1112 4.35048C18.6242 5.36139 19.8034 6.79823 20.4997 8.47931C21.196 10.1604 21.3782 12.0102 21.0232 13.7948C20.6682 15.5795 19.792 17.2187 18.5054 18.5054C17.2187 19.792 15.5795 20.6682 13.7948 21.0232C12.0102 21.3782 10.1604 21.196 8.47931 20.4997C6.79823 19.8034 5.36139 18.6242 4.35048 17.1112C3.33957 15.5983 2.8 13.8196 2.8 12C2.80265 9.56082 3.77278 7.22231 5.49754 5.49755C7.2223 3.77278 9.56082 2.80265 12 2.8ZM7.717 13.883C7.67981 13.8459 7.65031 13.8017 7.63018 13.7532C7.61005 13.7046 7.59969 13.6526 7.59969 13.6C7.59969 13.5474 7.61005 13.4954 7.63018 13.4468C7.65031 13.3983 7.67981 13.3542 7.717 13.317L11.717 9.317C11.7541 9.27981 11.7983 9.25031 11.8468 9.23018C11.8954 9.21005 11.9474 9.19969 12 9.19969C12.0526 9.19969 12.1046 9.21005 12.1532 9.23018C12.2017 9.25031 12.2458 9.27981 12.283 9.317L16.283 13.317C16.3202 13.3542 16.3496 13.3983 16.3698 13.4468C16.3899 13.4954 16.4002 13.5474 16.4002 13.6C16.4002 13.6526 16.3899 13.7046 16.3698 13.7532C16.3496 13.8017 16.3202 13.8458 16.283 13.883C16.2458 13.9202 16.2017 13.9496 16.1532 13.9698C16.1046 13.9899 16.0526 14.0002 16 14.0002C15.9474 14.0002 15.8954 13.9899 15.8468 13.9698C15.7983 13.9496 15.7542 13.9202 15.717 13.883L12 10.166L8.283 13.883C8.24585 13.9202 8.20174 13.9497 8.15318 13.9698C8.10462 13.99 8.05257 14.0003 8 14.0003C7.94743 14.0003 7.89538 13.99 7.84682 13.9698C7.79826 13.9497 7.75415 13.9202 7.717 13.883Z" fill="#F8FAFC"/>
+</svg>
+    </button>
+  </hbox>
+
+  <dialog class="lang-modal" id="lang-modal">
+    <form method="dialog" class="lang-modal-form">
+      <hbox class="lang-modal-head" xalign="center" pack="start">
+        <p class="lang-modal-title">Select your preferred language</p>
+        <spacer flex="1"></spacer>
+        <button class="lang-modal-close" type="submit" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none">
+  <path d="M18 6L6 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+  <path d="M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>
+        </button>
+      </hbox>
+      <vbox class="lang-modal-list">
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/cs">
+          <span>čeština</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/de">
+          <span>Deutsch</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/en" aria-current="true">
+          <span>English</span>
+          <spacer flex="1"></spacer>
+          
+          <span class="check"><svg viewBox="0 0 24 24" fill="none">
+  <path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</span>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/es">
+          <span>español</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/fr">
+          <span>français</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/it">
+          <span>italiano</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/ja">
+          <span>日本語</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/ko">
+          <span>한국어</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/pl">
+          <span>polski</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/pt-BR">
+          <span>português (Brasil)</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/ru">
+          <span>русский</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/sk">
+          <span>slovenčina</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/tr">
+          <span>Türkçe</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/uk">
+          <span>українська</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/zh-CN">
+          <span>中文（中国）</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+        <a class="lang-modal-item hbox t-p" href="/lang/zh-TW">
+          <span>中文（台灣）</span>
+          <spacer flex="1"></spacer>
+          
+        </a>
+        
+      </vbox>
+      <hbox class="lang-modal-foot" pack="end">
+        <button class="btn-primary t-p" type="submit">Done</button>
+      </hbox>
+    </form>
+  </dialog>
+</vbox>
+    </vbox>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"fc4b58c974e64281bded8fabe6aa9f09"}' crossorigin="anonymous"></script>
+</body>
+</html>
